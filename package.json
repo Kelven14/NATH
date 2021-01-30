@@ -1,0 +1,22 @@
+{
+  "name": "nath",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kelven14/NATH.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kelven14/NATH/issues"
+  },
+  "homepage": "https://github.com/Kelven14/NATH#readme",
+  "dependencies": {
+    "create-react-app": "^4.0.1"
+  }
+}
