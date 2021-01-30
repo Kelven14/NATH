@@ -1,23 +1,16 @@
 import React from 'react';
-import { makeStyles } from "@material-ui/core";
 import Routes from './Routes';
-
-const useStyles = makeStyles({
-  appMain: {
-
-    width: '100%',
-    
-  }
-})
-
+import {ThemeProvider} from '@material-ui/core/styles';
+import theme from './theme';
 
 export default function App() {
-  const classes = useStyles();
+  
   return (
-    
-    <div className="App">
+    <ThemeProvider theme={theme}>
       <Routes/>
-    </div>    
+    </ThemeProvider>
+      
+  
   );
 }
 

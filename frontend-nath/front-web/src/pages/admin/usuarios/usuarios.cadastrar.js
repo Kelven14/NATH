@@ -70,7 +70,7 @@ export default function UsuarioCadastrar() {
       senha_usuario:senha,
       tipo_usuario:tipo
     }
-    if(nome!=' '&&email!=''&& tipo!=''&&senha!=''){
+    if(nome!==' '&&email!==''&& tipo!==''&&senha!==''){
     console.log(data);
     }else{
       alert('Por favor, preencha todos os dados!!')

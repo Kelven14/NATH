@@ -29,7 +29,7 @@ public class PatientService {
 
 	@Transactional
 	public PatientDTO insert(PatientDTO dto) {
-		Patient patient = new Patient(null, dto.getName(), dto.getPain(), dto.getPulse(), dto.getOximetry(),
+		Patient patient = new Patient(null, dto.getName(),dto.getPassword(), dto.getPain(), dto.getPulse(), dto.getOximetry(),
 				Instant.now(), dto.getColor(), ListStatus.WAITING);
 
 		patient = repository.save(patient);

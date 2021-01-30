@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import MenuAdmin from '../../../components/menu-admin'
-import ImgAdmin from '../../../asssets/img/feiAdmin.png'
 import Footer from '../../../components/footer-admin'
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -18,13 +16,22 @@ import TableRow from '@material-ui/core/TableRow';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import Typography from '@material-ui/core/Typography';
 import ExitToApp from '@material-ui/icons/ExitToApp';
-
-
+import CheckBox from '@material-ui/icons/CheckBox';
+import Chip from '@material-ui/core/Chip';
+import { ThemeProvider } from '@material-ui/core/styles';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import Button from '@material-ui/core/Button';
 import clsx from 'clsx';
+import api from '../../../services/api';
+import themeChip from '../../../theme/chip';
 
+import dayjs from 'dayjs';
+import 'dayjs/locale/pt-br';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
+dayjs.locale('pt-br');
+dayjs.extend(relativeTime);
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -39,13 +46,14 @@ const rows = [
 ];
 
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
   },
   title: {
     flexGrow: 1,
-    marginLeft:3,
+    marginLeft: 3,
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
@@ -66,21 +74,46 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
+function dateFromNow(date){
+  return dayjs(date).fromNow();
+}
+
+
 export default function UsuariosListagem() {
   const classes = useStyles();
+
+  const [pacientes, setPacientes] = useState([])
+
+  useEffect(() => {
+    async function loadUsuarios() {
+      const response = await api.get('patients');
+      setPacientes(response.data)
+    }
+    loadUsuarios();
+  }, [])
+
+  async function handleDelete(id){
+    if(window.confirm("Deseja retirar o paciente da fila?")){
+      var result = await api.delete('patients/delete/'+id);
+      if(result.status==200){
+        window.location.href='/admin/pacientes';
+      }
+      else{
+        alert('Ocorreu um erro. Por favor, tente novamente!')
+      }
     
+    }
+  }
+
   return (
     <div className={classes.root}>
       <CssBaseline />
 
       <AppBar position="absolute" className={clsx(classes.appBar && classes.appBarShift)}>
         <Toolbar className={classes.toolbar}>
-
-          <ExitToApp />
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            SAIR
-          </Typography>
-
+          <IconButton component="a" href="/admin">
+            <ExitToApp />
+          </IconButton>
         </Toolbar>
       </AppBar>
       <main className={classes.content}>
@@ -89,30 +122,51 @@ export default function UsuariosListagem() {
           <Grid container spacing={3}>
             <Grid item sm={12}>
               <Paper className={classes.paper}>
-                <h2>Listagem de Pacientes</h2>
+                <h2 align="center">Pacientes Aguardando na Sala de Espera</h2>
                 <Grid container spacing={3}>
                   <Grid item xs={12} sm={12}>
                     <TableContainer component={Paper}>
-                      <Table className={classes.table} size="small" aria-label="a dense table">
+                      <Table className={classes.table} aria-label="simple table">
                         <TableHead>
                           <TableRow>
-                            <TableCell>Dessert (100g serving)</TableCell>
-                            <TableCell align="right">Calories</TableCell>
-                            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                            <TableCell align="left">Nome</TableCell>
+                            <TableCell align="center">Senha</TableCell>
+                            <TableCell align="center">Classificação</TableCell>
+                            <TableCell align="center">Tempo</TableCell>
+                            <TableCell align="center">Opções</TableCell>
+
                           </TableRow>
                         </TableHead>
                         <TableBody>
-                          {rows.map((row) => (
-                            <TableRow key={row.name}>
-                              <TableCell component="th" scope="row">
+                          {pacientes.map((row) => (
+                            <TableRow key={row.id}>
+                              <TableCell align="left" component="th" scope="row">
                                 {row.name}
+                              </TableCell  >
+                              <TableCell align="center" >{row.password}</TableCell>
+                              
+                                <TableCell align="center" >{row.color == "VERMELHO" ? <Chip
+                                  label="VERMELHO"
+                                  color="secondary"
+                                /> : <> <ThemeProvider theme={themeChip}>  {row.color == "LARANJA" ? <Chip
+                                  label="LARANJA"
+
+                                  color="primary"
+                                /> : <Chip
+                                    label="AMARELO"
+                                    color="secondary"
+                                  />} </ThemeProvider></>}
+                                </TableCell>
+
+                             
+
+                              <TableCell align="center" >{ dateFromNow(row.moment) }</TableCell>
+                              <TableCell align="center" >
+                              <ButtonGroup  aria-label="outlined primary button group">
+                              <Button color="primary" >CHAMAR</Button>
+                              <Button color="secondary" onClick={()=>handleDelete(row.id)}>CONFIRMAR</Button>
+                              </ButtonGroup>                        
                               </TableCell>
-                              <TableCell align="right">{row.calories}</TableCell>
-                              <TableCell align="right">{row.fat}</TableCell>
-                              <TableCell align="right">{row.carbs}</TableCell>
-                              <TableCell align="right">{row.protein}</TableCell>
                             </TableRow>
                           ))}
                         </TableBody>

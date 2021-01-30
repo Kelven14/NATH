@@ -7,7 +7,6 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import PeopleIcon from '@material-ui/icons/People';
 import GroupAdd from '@material-ui/icons/GroupAdd';
-import AssignmentIcon from '@material-ui/icons/Assignment';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import Help from '@material-ui/icons/Help';
 import AccountBox from '@material-ui/icons/AccountBox';

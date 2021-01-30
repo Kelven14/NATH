@@ -19,6 +19,7 @@ public class Patient implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
+	private String password;
 	private int pain;
 	private double pulse;
 	private int oximetry;
@@ -30,11 +31,12 @@ public class Patient implements Serializable {
 
 	}
 
-	public Patient(Long id, String name, int pain, double pulse, int oximetry, Instant moment, ListColor color,
+	public Patient(Long id, String name,String password, int pain, double pulse, int oximetry, Instant moment, ListColor color,
 			ListStatus status) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.password=password;
 		this.pain = pain;
 		this.pulse = pulse;
 		this.oximetry = oximetry;
@@ -57,6 +59,15 @@ public class Patient implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public int getPain() {

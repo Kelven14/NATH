@@ -13,7 +13,6 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import clsx from 'clsx';
 
-import Badge from '@material-ui/core/Badge';
 
 
 const drawerWidth = 240;
