@@ -6,6 +6,7 @@ import Dashboard from './pages/admin/dashboard';
 
 import Pacientes from './pages/admin/pacientes';
 import PacientesEditar from './pages/admin/pacientes/pacientes.editar';
+import PacientesChamar from './pages/admin/pacientes/pacientes.chamar';
 import PacientesCadastrar from './pages/admin/pacientes/pacientes.cadastrar';
 
 import Usuarios from './pages/admin/usuarios';
@@ -30,6 +31,7 @@ export default function Routes(){
                 <Route path="/admin/pacientes" exact component={Pacientes} />
                 <Route path="/admin/pacientes/cadastrar" exact component={PacientesCadastrar} />
                 <Route path="/admin/pacientes/editar/:idPacientes" exact component={PacientesEditar} />
+                <Route path="/admin/pacientes/chamar/:idPacientes" exact component={PacientesChamar} />
 
                 <Route path="/admin/usuarios" exact component={Usuarios} />
                 <Route path="/admin/usuarios/cadastrar" exact component={UsuarioCadastrar} />

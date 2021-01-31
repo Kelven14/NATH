@@ -14,6 +14,7 @@ public class PatientDTO implements Serializable {
 	private Long id;
 	private String name;
 	private String password;
+	private int flowchart;
 	private int pain;
 	private double pulse;
 	private int oximetry;
@@ -25,11 +26,12 @@ public class PatientDTO implements Serializable {
 
 	}
 
-	public PatientDTO(Long id, String name,String password, int pain, double pulse, int oximetry, Instant moment, ListColor color,
+	public PatientDTO(Long id, String name,String password,int flowchart, int pain, double pulse, int oximetry, Instant moment, ListColor color,
 			ListStatus status) {
 		this.id = id;
 		this.name = name;
 		this.password=password;
+		this.flowchart=flowchart;
 		this.pain = pain;
 		this.pulse = pulse;
 		this.oximetry = oximetry;
@@ -42,6 +44,7 @@ public class PatientDTO implements Serializable {
 		id = entity.getId();
 		name = entity.getName();
 		password=entity.getPassword();
+		flowchart=entity.getFlowchart();
 		pain = entity.getPain();
 		pulse = entity.getPulse();
 		oximetry = entity.getOximetry();
@@ -66,13 +69,20 @@ public class PatientDTO implements Serializable {
 		this.name = name;
 	}
 
-	
 	public String getPassword() {
 		return password;
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public int getFlowchart() {
+		return flowchart;
+	}
+
+	public void setFlowchart(int flowchart) {
+		this.flowchart = flowchart;
 	}
 
 	public int getPain() {

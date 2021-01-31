@@ -12,13 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import com.system.NATH.dto.PatientDTO;
-import com.system.NATH.entities.Patient;
 import com.system.NATH.services.PatientService;
 
 @RestController
@@ -32,6 +28,11 @@ public class PatientController {
 	public ResponseEntity<List<PatientDTO>> findAll() {
 		List<PatientDTO> list = service.findAll();
 		return ResponseEntity.ok().body(list);
+	}
+	@GetMapping("/{id}")
+	public ResponseEntity<PatientDTO> getById(@PathVariable long id){
+		PatientDTO dto =service.getById(id);
+		return ResponseEntity.ok().body(dto);
 	}
 
 	@PostMapping

@@ -20,6 +20,7 @@ public class Patient implements Serializable {
 	private Long id;
 	private String name;
 	private String password;
+	private int flowchart;
 	private int pain;
 	private double pulse;
 	private int oximetry;
@@ -31,12 +32,13 @@ public class Patient implements Serializable {
 
 	}
 
-	public Patient(Long id, String name,String password, int pain, double pulse, int oximetry, Instant moment, ListColor color,
+	public Patient(Long id, String name,String password, int flowchart,int pain, double pulse, int oximetry, Instant moment, ListColor color,
 			ListStatus status) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.password=password;
+		this.flowchart=flowchart;
 		this.pain = pain;
 		this.pulse = pulse;
 		this.oximetry = oximetry;
@@ -68,6 +70,14 @@ public class Patient implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public int getFlowchart() {
+		return flowchart;
+	}
+
+	public void setFlowchart(int flowchart) {
+		this.flowchart = flowchart;
 	}
 
 	public int getPain() {

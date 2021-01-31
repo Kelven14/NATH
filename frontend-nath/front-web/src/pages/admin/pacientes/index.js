@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-function dateFromNow(date){
+function dateFromNow(date) {
   return dayjs(date).fromNow();
 }
 
@@ -92,16 +92,16 @@ export default function UsuariosListagem() {
     loadUsuarios();
   }, [])
 
-  async function handleDelete(id){
-    if(window.confirm("Deseja retirar o paciente da fila?")){
-      var result = await api.delete('patients/delete/'+id);
-      if(result.status==200){
-        window.location.href='/admin/pacientes';
+  async function handleDelete(id) {
+    if (window.confirm("Deseja retirar o paciente da fila?")) {
+      var result = await api.delete('patients/delete/' + id);
+      if (result.status == 200) {
+        window.location.href = '/admin/pacientes';
       }
-      else{
+      else {
         alert('Ocorreu um erro. Por favor, tente novamente!')
       }
-    
+
     }
   }
 
@@ -132,7 +132,7 @@ export default function UsuariosListagem() {
                             <TableCell align="left">Nome</TableCell>
                             <TableCell align="center">Senha</TableCell>
                             <TableCell align="center">Classificação</TableCell>
-                            <TableCell align="center">Tempo</TableCell>
+                            <TableCell align="center">Tempo de Espera</TableCell>
                             <TableCell align="center">Opções</TableCell>
 
                           </TableRow>
@@ -144,28 +144,25 @@ export default function UsuariosListagem() {
                                 {row.name}
                               </TableCell  >
                               <TableCell align="center" >{row.password}</TableCell>
-                              
-                                <TableCell align="center" >{row.color == "VERMELHO" ? <Chip
-                                  label="VERMELHO"
+
+                              <TableCell align="center" >{row.color == "VERMELHO" ? <Chip
+                                label="VERMELHO"
+                                color="secondary"
+                              /> : <> <ThemeProvider theme={themeChip}>  {row.color == "LARANJA" ? <Chip
+                                label="LARANJA"
+
+                                color="primary"
+                              /> : <Chip
+                                  label="AMARELO"
                                   color="secondary"
-                                /> : <> <ThemeProvider theme={themeChip}>  {row.color == "LARANJA" ? <Chip
-                                  label="LARANJA"
-
-                                  color="primary"
-                                /> : <Chip
-                                    label="AMARELO"
-                                    color="secondary"
-                                  />} </ThemeProvider></>}
-                                </TableCell>
-
-                             
-
-                              <TableCell align="center" >{ dateFromNow(row.moment) }</TableCell>
+                                />} </ThemeProvider></>}
+                              </TableCell>
+                              <TableCell align="center" >{dateFromNow(row.moment)}</TableCell>
                               <TableCell align="center" >
-                              <ButtonGroup  aria-label="outlined primary button group">
-                              <Button color="primary" >CHAMAR</Button>
-                              <Button color="secondary" onClick={()=>handleDelete(row.id)}>CONFIRMAR</Button>
-                              </ButtonGroup>                        
+                                <ButtonGroup aria-label="outlined primary button group">
+                                  <Button color="primary" href={'/admin/pacientes/chamar/' + row.id}>CHAMAR</Button>
+                                  <Button color="secondary" onClick={() => handleDelete(row.id)}>CONFIRMAR</Button>
+                                </ButtonGroup>
                               </TableCell>
                             </TableRow>
                           ))}

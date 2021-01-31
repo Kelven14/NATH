@@ -69,17 +69,18 @@
       }
     ); */}
   
-    
+   
   
     function handleSubmit(){
   
       const data={
-        nome:nome,
-        senha:senha,
+        name:nome,
+        password:senha,
         oximetria:oximetria,
-        dor:dor,
-        fluxograma:fluxograma,
-        cor:cor
+        pulse:pulsação,
+        pain:dor,
+        flowchart:fluxograma,
+        color:cor
       }
      
       console.log(data);
