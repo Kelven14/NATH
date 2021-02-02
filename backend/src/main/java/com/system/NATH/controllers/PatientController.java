@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import com.system.NATH.dto.PatientDTO;
 import com.system.NATH.services.PatientService;
 
@@ -29,9 +31,22 @@ public class PatientController {
 		List<PatientDTO> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
+
+	@GetMapping("status/called")
+	public ResponseEntity<List<PatientDTO>> findCalled() {
+		List<PatientDTO> list = service.findByCalled();
+		return ResponseEntity.ok().body(list);
+	}
+
+	@GetMapping("status/finish/attending")
+	public ResponseEntity<List<PatientDTO>> findAttending() {
+		List<PatientDTO> list = service.findByAttending();
+		return ResponseEntity.ok().body(list);
+	}
+
 	@GetMapping("/{id}")
-	public ResponseEntity<PatientDTO> getById(@PathVariable long id){
-		PatientDTO dto =service.getById(id);
+	public ResponseEntity<PatientDTO> getById(@PathVariable long id) {
+		PatientDTO dto = service.getById(id);
 		return ResponseEntity.ok().body(dto);
 	}
 
@@ -41,18 +56,35 @@ public class PatientController {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
 		return ResponseEntity.created(uri).body(dto);
 	}
-	
 
-	@DeleteMapping(path="/delete/{id}")
-    public ResponseEntity<?> deleteById(@PathVariable Long id){
-        try{
-            service.deleteById(id);
-            //LOGGER.info("record successfully deleted");
-            return new ResponseEntity<>(HttpStatus.OK);
-        }catch (Exception e){
+	@PutMapping("/{id}/called")
+	public ResponseEntity<PatientDTO> setStatusCalled(@PathVariable Long id) {
+		PatientDTO dto = service.setStatusCalled(id);
+		return ResponseEntity.ok().body(dto);
+	}
 
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+	@PutMapping("/{id}/attending")
+	public ResponseEntity<PatientDTO> setStatusAttending(@PathVariable Long id) {
+		PatientDTO dto = service.setStatusAttending(id);
+		return ResponseEntity.ok().body(dto);
+	}
 
-}
+	@DeleteMapping(path = "/delete/{id}")
+	public ResponseEntity<?> deleteById(@PathVariable Long id) {
+		try {
+			service.deleteById(id);
+			// LOGGER.info("record successfully deleted");
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}	
+
+	}
+
+	@DeleteMapping(path = "/delete/All/finishDay")
+	public void deleteById() {
+		service.deleteAll();
+
+	}
 }

@@ -84,8 +84,7 @@
       }
      
       console.log(data);
-     
-      {/**  const response=api.post('/api/usuarios',data)*/}
+      const response=api.post('/patients',data)
     
     }
 
@@ -98,7 +97,7 @@
             <Grid container spacing={3}>
               <Grid item sm={12}>
                 <Paper className={classes.paper}>
-                  <h2>Cadastro de Pacientes</h2>
+                  <h2 align="center">Cadastro de Pacientes</h2>
                   <Grid container spacing={3}>
                     <Grid item xs={12} sm={12}>
                       <TextField
@@ -177,12 +176,10 @@
                      autoFocus
                      label="Nível de dor"
                      type="number"
-                     InputLabelProps={{
-                         shrink: true,
-                     }}
+                     
                      InputProps={{
                          inputProps: {
-                             max: 16, min: 0
+                             max: 10, min: 0
                          }
                      }}
                      value={dor}
@@ -190,6 +187,7 @@
                      variant="outlined"
                       />
                     </Grid>
+                    {/*
                     <Grid item xs={12} sm={4}>
                       <TextField
                       className={classes.formControl}
@@ -197,11 +195,8 @@
                       name="userFluxograma"
                       id="outlined-number"
                       label="Fluxograma"
-                      
                       type="number"
-                      InputLabelProps={{
-                          shrink: true,
-                      }}
+                      
                       InputProps={{
                           inputProps: {
                               max: 52, min: 0
@@ -211,6 +206,26 @@
                         onChange={e => setFluxograma(e.target.value)}
                         variant="outlined"
                       />
+                    </Grid>*/}
+                      <Grid item xs={12} sm={4}>
+                      <FormControl className={classes.formControl}
+                           required
+                         
+                        >
+                        <InputLabel  id="labelTipo">Fluxograma</InputLabel>
+                        <Select
+                          variant="outlined"
+                          labelId="labelFluxograma"
+                          id="fluxograma"
+                          value={fluxograma}
+                          onChange={e => setFluxograma(e.target.value)}
+                      
+                        >
+                          <MenuItem value={0}>01 - Dor Abdominal</MenuItem>
+                          <MenuItem value={1}>09 - Dor Lombar/Costas</MenuItem>
+                          <MenuItem value={2}>26 - Sangramento Digestivo</MenuItem>
+                        </Select>
+                      </FormControl>
                     </Grid>
                     <Grid item xs={12} sm={4}>
                       <FormControl className={classes.formControl}
@@ -219,21 +234,21 @@
                         >
                         <InputLabel  id="labelTipo">Cor classificado</InputLabel>
                         <Select
-        
+                          variant="outlined"
                           labelId="labelCor"
                           id="cor"
                           value={cor}
                           onChange={e => setCor(e.target.value)}
                       
                         >
-                          <MenuItem value={1}>Vermelho</MenuItem>
-                          <MenuItem value={2}>Laranja</MenuItem>
-                          <MenuItem value={3}>Amarelo</MenuItem>
+                          <MenuItem value={0}>Amarelo</MenuItem>
+                          <MenuItem value={1}>Laranja</MenuItem>
+                          <MenuItem value={2}>Vermelho</MenuItem>
                         </Select>
                       </FormControl>
                     </Grid>
                     
-                    <Grid item xs={12} sm={12}>
+                    <Grid item  xs={12} sm={12}>
                       <Button  className={classes.formControlButton} variant="contained" onClick={handleSubmit} color="primary">
                         Cadastrar
                       </Button>

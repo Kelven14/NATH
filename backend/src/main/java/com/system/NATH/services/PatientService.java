@@ -25,6 +25,17 @@ public class PatientService {
 		return list.stream().map(x -> new PatientDTO(x)).collect(Collectors.toList());
 	}
 	
+	@Transactional(readOnly = true)
+	public List<PatientDTO> findByCalled() {
+		List<Patient> list = repository.findOrderWithPatientCalled();
+		return list.stream().map(x -> new PatientDTO(x)).collect(Collectors.toList());
+	}
+	
+	@Transactional(readOnly = true)
+	public List<PatientDTO> findByAttending() {
+		List<Patient> list = repository.findOrderWithPatientAttending();
+		return list.stream().map(x -> new PatientDTO(x)).collect(Collectors.toList());
+	}
 	@Transactional
 	public  PatientDTO getById(Long id) {
 		Patient patient=repository.getOne(id);
@@ -39,11 +50,31 @@ public class PatientService {
 		patient = repository.save(patient);
 		return new PatientDTO(patient);
 	}
-
+	
+	@Transactional
+	public PatientDTO setStatusAttending(Long id) {
+		Patient patient=repository.getOne(id);
+		patient.setStatus(ListStatus.ATTENDING);
+		patient = repository.save(patient);
+		return new PatientDTO(patient);
+	}
+	@Transactional
+	public PatientDTO setStatusCalled(Long id) {
+		Patient patient=repository.getOne(id);
+		patient.setStatus(ListStatus.CALLED);
+		patient = repository.save(patient);
+		return new PatientDTO(patient);
+	}
+	
 	@Transactional	
 	public void deleteById(Long id) {
-		
 		repository.deleteById(id);
-		
 	}
+	
+	
+	@Transactional	
+	public void deleteAll() {
+		repository.deleteAll();
+	}
+	
 }

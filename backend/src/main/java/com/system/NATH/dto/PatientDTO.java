@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.Instant;
 
 import com.system.NATH.entities.ListColor;
+import com.system.NATH.entities.ListFlowchart;
 import com.system.NATH.entities.ListStatus;
 import com.system.NATH.entities.Patient;
 
@@ -14,7 +15,7 @@ public class PatientDTO implements Serializable {
 	private Long id;
 	private String name;
 	private String password;
-	private int flowchart;
+	private ListFlowchart flowchart;
 	private int pain;
 	private double pulse;
 	private int oximetry;
@@ -26,7 +27,7 @@ public class PatientDTO implements Serializable {
 
 	}
 
-	public PatientDTO(Long id, String name,String password,int flowchart, int pain, double pulse, int oximetry, Instant moment, ListColor color,
+	public PatientDTO(Long id, String name,String password,ListFlowchart flowchart, int pain, double pulse, int oximetry, Instant moment, ListColor color,
 			ListStatus status) {
 		this.id = id;
 		this.name = name;
@@ -77,11 +78,11 @@ public class PatientDTO implements Serializable {
 		this.password = password;
 	}
 	
-	public int getFlowchart() {
+	public  ListFlowchart getFlowchart() {
 		return flowchart;
 	}
 
-	public void setFlowchart(int flowchart) {
+	public void setFlowchart( ListFlowchart flowchart) {
 		this.flowchart = flowchart;
 	}
 

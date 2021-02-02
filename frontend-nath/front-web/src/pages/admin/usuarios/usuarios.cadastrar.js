@@ -41,6 +41,10 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     width: '100%'
   },
+  formControlButton: {
+    width: '100%',
+    marginTop:20,
+  },
 
 }));
 
@@ -89,7 +93,7 @@ export default function UsuarioCadastrar() {
           <Grid container spacing={3}>
             <Grid item sm={12}>
               <Paper className={classes.paper}>
-                <h2>Cadastro de Usuários</h2>
+                <h2 align="center">Cadastro de Usuários</h2>
                 <Grid container spacing={3}>
                   <Grid item xs={12} sm={12}>
                     <TextField
@@ -146,7 +150,7 @@ export default function UsuarioCadastrar() {
                     />
                   </Grid>
                   <Grid item xs={12} sm={12}>
-                    <Button variant="contained" onClick={handleSubmit} color="primary">
+                    <Button className={classes.formControlButton} variant="contained" onClick={handleSubmit} color="primary">
                       Cadastrar
                     </Button>
                   </Grid>

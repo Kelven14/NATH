@@ -20,19 +20,20 @@ public class Patient implements Serializable {
 	private Long id;
 	private String name;
 	private String password;
-	private int flowchart;
+	private ListFlowchart flowchart;
 	private int pain;
 	private double pulse;
 	private int oximetry;
 	private Instant moment;
 	private ListColor color;
 	private ListStatus status;
+	
 
 	public Patient() {
 
 	}
 
-	public Patient(Long id, String name,String password, int flowchart,int pain, double pulse, int oximetry, Instant moment, ListColor color,
+	public Patient(Long id, String name,String password,ListFlowchart flowchart,int pain, double pulse, int oximetry, Instant moment, ListColor color,
 			ListStatus status) {
 		super();
 		this.id = id;
@@ -72,11 +73,11 @@ public class Patient implements Serializable {
 		this.password = password;
 	}
 
-	public int getFlowchart() {
+	public ListFlowchart getFlowchart() {
 		return flowchart;
 	}
 
-	public void setFlowchart(int flowchart) {
+	public void setFlowchart(ListFlowchart flowchart) {
 		this.flowchart = flowchart;
 	}
 
