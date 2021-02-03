@@ -71,7 +71,7 @@
   
    
   
-    function handleSubmit(){
+     async function handleSubmit(){
   
       const data={
         name:nome,
@@ -84,7 +84,14 @@
       }
      
       console.log(data);
-      const response=api.post('/patients',data)
+      const response= await api.post('/patients',data)
+
+      if (response.status == 201) {
+        window.location.href = '/admin/pacientes/all';
+      }
+      else {
+        alert('Ocorreu um erro. Por favor, tente novamente!')
+      }
     
     }
 

@@ -63,7 +63,7 @@ export const secondaryListItems = (
       </ListItemIcon>
       <ListItemText primary="Ajuda" />
     </ListItem> 
-    <ListItem button>
+    <ListItem button component="a"  href="/">
       <ListItemIcon>
         <ExitToApp />
       </ListItemIcon>

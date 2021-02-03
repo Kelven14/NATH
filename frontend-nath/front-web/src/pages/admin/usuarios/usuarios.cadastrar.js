@@ -66,22 +66,23 @@ export default function UsuarioCadastrar() {
 
   
 
-  function handleSubmit(){
+  async function handleSubmit(){
 
     const data={
       nome:nome,
       usuario:usuario,
       senha:senha,
       tipo:tipo
-     
     }
-    if(nome!==' '&&usuario!==''&&tipo!=''&&senha!==''){
-    console.log(data);
-    }else{
-      alert('Por favor, preencha todos os dados!!')
+    const response= await api.post('/usuarios/cadastrar',data)
+    if (response.status == 200) {
+      window.location.href = '/admin/usuarios';
+    }
+    else {
+      alert('Ocorreu um erro. Por favor, tente novamente!')
     }
 
-     const response=api.post('/usuarios/cadastrar',data)
+   
   }
 
   return (

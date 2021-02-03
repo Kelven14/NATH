@@ -15,7 +15,7 @@ import UsuarioEditar from './pages/admin/usuarios/usuarios.editar';
 import UsuarioCadastrar from './pages/admin/usuarios/usuarios.cadastrar';
 
 // IMPORTS CLIENT
-import Home from './pages/client/home';
+import Login from './pages/client/login';
 import PacientesDetails from './pages/client/pacientes/pacientes.details';
 
 export default function Routes(){
@@ -23,7 +23,7 @@ export default function Routes(){
         <BrowserRouter>
         <Switch>
                 {/* Rota Cliente */}
-                <Route path="/" exact component={Home} />
+                <Route path="/" exact component={Login} />
                 <Route path="/pacientes/:idPacientes" exact component={PacientesDetails} />
 
                 {/* Rota Admin */}

@@ -83,9 +83,9 @@ export default function UsuariosListagem() {
 
   async function handleDelete(id) {
     if (window.confirm("Deseja retirar o paciente da fila?")) {
-      var result = await api.delete('patients/delete/' + id);
+      var result = await api.delete('usuarios/delete/' + id);
       if (result.status == 200) {
-        window.location.href = '/admin/pacientes';
+        window.location.href = '/admin/usuarios';
       }
       else {
         alert('Ocorreu um erro. Por favor, tente novamente!')
@@ -127,7 +127,17 @@ export default function UsuariosListagem() {
                                 {row.nome}
                               </TableCell  >
                               <TableCell align="center" >{row.usuario}</TableCell>
-                              <TableCell align="center" >{row.tipo}</TableCell>
+                              <TableCell align="center" >{row.tipo == "Administrador" ? <Chip
+                                label="Administrador(a)"
+                                color="secondary"
+                              /> : <> <ThemeProvider theme={themeChip}>  {row.tipo == "Médico" ? <Chip
+                                label="Médico(a)"
+                                color="primary"
+                              /> : <Chip
+                                  label="Enfermeiro(a)"
+                                  color="secondary"
+                                />} </ThemeProvider></>}
+                              </TableCell>
                               <TableCell align="center" >{row.senha}</TableCell>
                               <TableCell align="center" >
                                 <ButtonGroup aria-label="outlined primary button group">
