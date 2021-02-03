@@ -34,8 +34,6 @@ import MenuAdmin from '../../../components/menu-admin';
 dayjs.locale('pt-br');
 dayjs.extend(relativeTime);
 
-
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -71,12 +69,12 @@ function dateFromNow(date) {
 export default function UsuariosListagem() {
   const classes = useStyles();
 
-  const [usuarios, setUsuarios] = useState([])
+  const [pacientes, setPacientes] = useState([])
 
   useEffect(() => {
     async function loadUsuarios() {
-      const response = await api.get('usuarios');
-      setUsuarios(response.data)
+      const response = await api.get('patients');
+      setPacientes(response.data)
     }
     loadUsuarios();
   }, [])
@@ -85,7 +83,7 @@ export default function UsuariosListagem() {
     if (window.confirm("Deseja retirar o paciente da fila?")) {
       var result = await api.delete('patients/delete/' + id);
       if (result.status == 200) {
-        window.location.href = '/admin/pacientes';
+        window.location.href = '/admin/pacientes/all';
       }
       else {
         alert('Ocorreu um erro. Por favor, tente novamente!')
@@ -96,16 +94,14 @@ export default function UsuariosListagem() {
 
   return (
     <div className={classes.root}>
-      <CssBaseline />
-
-      <MenuAdmin title={'Usuários'} />
+    <MenuAdmin title={'Pacientes'} />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
             <Grid item sm={12}>
               <Paper className={classes.paper}>
-                <h2 align="center">Lista de Usuários</h2>
+                <h2 align="center">Pacientes </h2>
                 <Grid container spacing={3}>
                   <Grid item xs={12} sm={12}>
                     <TableContainer component={Paper}>
@@ -113,26 +109,38 @@ export default function UsuariosListagem() {
                         <TableHead>
                           <TableRow>
                             <TableCell align="left">Nome</TableCell>
-                            <TableCell align="center">Email</TableCell>
-                            <TableCell align="center">Tipo</TableCell>
                             <TableCell align="center">Senha</TableCell>
+                            <TableCell align="center">Classificação</TableCell>
+                            <TableCell align="center">Tempo de Espera</TableCell>
                             <TableCell align="center">Opções</TableCell>
 
                           </TableRow>
                         </TableHead>
                         <TableBody>
-                          {usuarios.map((row) => (
+                          {pacientes.map((row) => (
                             <TableRow key={row.id}>
                               <TableCell align="left" component="th" scope="row">
-                                {row.nome}
+                                {row.name}
                               </TableCell  >
-                              <TableCell align="center" >{row.usuario}</TableCell>
-                              <TableCell align="center" >{row.tipo}</TableCell>
-                              <TableCell align="center" >{row.senha}</TableCell>
+                              <TableCell align="center" >{row.password}</TableCell>
+
+                              <TableCell align="center" >{row.color == "VERMELHO" ? <Chip
+                                label="VERMELHO"
+                                color="secondary"
+                              /> : <> <ThemeProvider theme={themeChip}>  {row.color == "LARANJA" ? <Chip
+                                label="LARANJA"
+
+                                color="primary"
+                              /> : <Chip
+                                  label="AMARELO"
+                                  color="secondary"
+                                />} </ThemeProvider></>}
+                              </TableCell>
+                              <TableCell align="center" >{dateFromNow(row.moment)}</TableCell>
                               <TableCell align="center" >
                                 <ButtonGroup aria-label="outlined primary button group">
-                                  <Button color="primary" href={'/admin/pacientes/chamar/' + row.id} disabled={row.nome==="Admin"}>Editar</Button>
-                                  <Button color="secondary" onClick={() => handleDelete(row.id)} disabled={row.nome==="Admin"}>Excluir</Button>
+                                  <Button color="primary" href={'/admin/pacientes/chamar/' + row.id}>CHAMAR</Button>
+                                  <Button color="secondary" onClick={() => handleDelete(row.id)}>CONFIRMAR</Button>
                                 </ButtonGroup>
                               </TableCell>
                             </TableRow>

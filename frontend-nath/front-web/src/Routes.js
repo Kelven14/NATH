@@ -5,6 +5,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Dashboard from './pages/admin/dashboard';
 
 import Pacientes from './pages/admin/pacientes';
+import PacientesAll from './pages/admin/pacientes/pacientes.all';
 import PacientesEditar from './pages/admin/pacientes/pacientes.editar';
 import PacientesChamar from './pages/admin/pacientes/pacientes.chamar';
 import PacientesCadastrar from './pages/admin/pacientes/pacientes.cadastrar';
@@ -29,6 +30,7 @@ export default function Routes(){
                 <Route path="/admin" exact component={Dashboard} />
                 
                 <Route path="/admin/pacientes" exact component={Pacientes} />
+                <Route path="/admin/pacientes/all" exact component={PacientesAll} />
                 <Route path="/admin/pacientes/cadastrar" exact component={PacientesCadastrar} />
                 <Route path="/admin/pacientes/editar/:idPacientes" exact component={PacientesEditar} />
                 <Route path="/admin/pacientes/chamar/:idPacientes" exact component={PacientesChamar} />

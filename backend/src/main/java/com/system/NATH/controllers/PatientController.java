@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,7 @@ import com.system.NATH.services.PatientService;
 
 @RestController
 @RequestMapping(value = "/patients")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PatientController {
 
 	@Autowired
@@ -31,24 +33,31 @@ public class PatientController {
 		List<PatientDTO> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
-
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<PatientDTO> getById(@PathVariable long id) {
+		PatientDTO dto = service.getById(id);
+		return ResponseEntity.ok().body(dto);
+	}
+	
+	@GetMapping("status/waiting")
+	public ResponseEntity<List<PatientDTO>> findWaiting() {
+		List<PatientDTO> list = service.findByWaiting();
+		return ResponseEntity.ok().body(list);
+	}
+	
 	@GetMapping("status/called")
 	public ResponseEntity<List<PatientDTO>> findCalled() {
 		List<PatientDTO> list = service.findByCalled();
 		return ResponseEntity.ok().body(list);
 	}
 
-	@GetMapping("status/finish/attending")
+	@GetMapping("status/attending")
 	public ResponseEntity<List<PatientDTO>> findAttending() {
 		List<PatientDTO> list = service.findByAttending();
 		return ResponseEntity.ok().body(list);
 	}
 
-	@GetMapping("/{id}")
-	public ResponseEntity<PatientDTO> getById(@PathVariable long id) {
-		PatientDTO dto = service.getById(id);
-		return ResponseEntity.ok().body(dto);
-	}
 
 	@PostMapping
 	public ResponseEntity<PatientDTO> insert(@RequestBody PatientDTO dto) {

@@ -4,4 +4,6 @@ INSERT INTO tb_patient(name,password,flowchart, pain, pulse, oximetry,moment,col
 INSERT INTO tb_patient(name,password,flowchart, pain, pulse, oximetry,moment,color,status) VALUES ('vinicius',4,2, 6, 78, 97, TIMESTAMP WITH TIME ZONE '2021-01-01T14:00:00Z',2,0);
 INSERT INTO tb_patient(name,password,flowchart, pain, pulse, oximetry,moment,color,status) VALUES ('luis',5,2, 3, 75, 95, TIMESTAMP WITH TIME ZONE '2021-01-01T16:00:00Z',0,0);
 
-	
+
+
+INSERT INTO tb_usuarios(nome,usuario,senha,tipo) VALUES ('Admin','Admin@gmail.com','$2a$10$todv3Zw.x30StPYCJ.Mh5uHUtEEH9JIn47ycSswwH2k5E8CQ7O8xC',0);

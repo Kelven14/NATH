@@ -10,6 +10,7 @@ import GroupAdd from '@material-ui/icons/GroupAdd';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import Help from '@material-ui/icons/Help';
 import AccountBox from '@material-ui/icons/AccountBox';
+import FeaturedPlayList from '@material-ui/icons/FeaturedPlayList';
 
 export const mainListItems = (
   <div>
@@ -31,6 +32,12 @@ export const mainListItems = (
         <PeopleIcon />
       </ListItemIcon>
       <ListItemText primary="Consultar Pacientes" />
+    </ListItem>
+    <ListItem button component="a"  href="/admin/pacientes/all">
+      <ListItemIcon>
+        <FeaturedPlayList />
+      </ListItemIcon>
+      <ListItemText primary="Todos Pacientes" />
     </ListItem>
   </div>
 );

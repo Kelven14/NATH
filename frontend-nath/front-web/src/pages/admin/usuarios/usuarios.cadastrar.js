@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 export default function UsuarioCadastrar() {
   const classes = useStyles();
   const [nome, setNome] = useState('');
-  const [email, setEmail] = useState('');
+  const [usuario, setUsuario] = useState('');
   const [senha, setSenha] = useState('');
   const [tipo, setTipo] = useState('');
 
@@ -69,19 +69,19 @@ export default function UsuarioCadastrar() {
   function handleSubmit(){
 
     const data={
-      nome_usuario:nome,
-      email_usuario:email,
-      senha_usuario:senha,
-      tipo_usuario:tipo
+      nome:nome,
+      usuario:usuario,
+      senha:senha,
+      tipo:tipo
+     
     }
-    if(nome!==' '&&email!==''&& tipo!==''&&senha!==''){
+    if(nome!==' '&&usuario!==''&&tipo!=''&&senha!==''){
     console.log(data);
     }else{
       alert('Por favor, preencha todos os dados!!')
     }
 
-   
-    {/**  const response=api.post('/api/usuarios',data)*/}
+     const response=api.post('/usuarios/cadastrar',data)
   }
 
   return (
@@ -116,8 +116,8 @@ export default function UsuarioCadastrar() {
                       label="Email"
                       fullWidth
                       autoComplete="email"
-                      value={email}
-                      onChange={e => setEmail(e.target.value)}
+                      value={usuario}
+                      onChange={e => setUsuario(e.target.value)}
                     />
                   </Grid>
                   <Grid item xs={12} sm={3}>
@@ -130,9 +130,9 @@ export default function UsuarioCadastrar() {
                         onChange={e => setTipo(e.target.value)}
 
                       >
-                        <MenuItem value={1}>Administrador(a)</MenuItem>
-                        <MenuItem value={2}>Médico(a)</MenuItem>
-                        <MenuItem value={3}>Enfermeiro(a)</MenuItem>
+                        <MenuItem value={0}>Administrador(a)</MenuItem>
+                        <MenuItem value={1}>Médico(a)</MenuItem>
+                        <MenuItem value={2}>Enfermeiro(a)</MenuItem>
                       </Select>
                     </FormControl>
                   </Grid>

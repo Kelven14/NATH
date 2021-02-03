@@ -21,6 +21,12 @@ public class PatientService {
 
 	@Transactional(readOnly = true)
 	public List<PatientDTO> findAll() {
+		List<Patient> list = repository.findAll();
+		return list.stream().map(x -> new PatientDTO(x)).collect(Collectors.toList());
+	}
+	
+	@Transactional(readOnly = true)
+	public List<PatientDTO> findByWaiting() {
 		List<Patient> list = repository.findOrderWithPatient();
 		return list.stream().map(x -> new PatientDTO(x)).collect(Collectors.toList());
 	}
