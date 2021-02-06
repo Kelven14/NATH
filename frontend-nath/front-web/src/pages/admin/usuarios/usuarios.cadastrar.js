@@ -106,6 +106,7 @@ export default function UsuarioCadastrar() {
                       autoComplete="nome"
                       value={nome}
                       onChange={e => setNome(e.target.value)}
+                      variant="outlined"
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -119,6 +120,7 @@ export default function UsuarioCadastrar() {
                       autoComplete="email"
                       value={usuario}
                       onChange={e => setUsuario(e.target.value)}
+                      variant="outlined"
                     />
                   </Grid>
                   <Grid item xs={12} sm={3}>
@@ -129,7 +131,7 @@ export default function UsuarioCadastrar() {
                         id="tipo"
                         value={tipo}
                         onChange={e => setTipo(e.target.value)}
-
+                        variant="outlined"
                       >
                         <MenuItem value={0}>Administrador(a)</MenuItem>
                         <MenuItem value={1}>Médico(a)</MenuItem>
@@ -148,6 +150,7 @@ export default function UsuarioCadastrar() {
                       autoComplete="senha"
                       value={senha}
                       onChange={e => setSenha(e.target.value)}
+                      variant="outlined"
                     />
                   </Grid>
                   <Grid item xs={12} sm={12}>

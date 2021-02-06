@@ -58,6 +58,10 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'auto',
     flexDirection: 'column',
   },
+  formControlButton: {
+    width: '40%',
+    marginTop:20,
+  },
 
 }));
 
@@ -79,9 +83,10 @@ export default function UsuariosListagem() {
     loadUsuarios();
   }, [])
 
-  async function handleDelete(id) {
-    if (window.confirm("Deseja retirar o paciente da fila?")) {
-      var result = await api.delete('patients/delete/' + id);
+
+     async function handleDelete() {
+    if (window.confirm("Deseja Exluir essa lista de pacientes?")) {
+      var result = await api.delete('patients/delete/All/finishDay');
       if (result.status == 200) {
         window.location.href = '/admin/pacientes/all';
       }
@@ -94,7 +99,7 @@ export default function UsuariosListagem() {
 
   return (
     <div className={classes.root}>
-    <MenuAdmin title={'Pacientes'} />
+      <MenuAdmin title={'Pacientes'} />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
@@ -112,8 +117,7 @@ export default function UsuariosListagem() {
                             <TableCell align="center">Senha</TableCell>
                             <TableCell align="center">Classificação</TableCell>
                             <TableCell align="center">Tempo de Espera</TableCell>
-                            <TableCell align="center">Opções</TableCell>
-
+                            <TableCell align="center">Status</TableCell>
                           </TableRow>
                         </TableHead>
                         <TableBody>
@@ -137,17 +141,20 @@ export default function UsuariosListagem() {
                                 />} </ThemeProvider></>}
                               </TableCell>
                               <TableCell align="center" >{dateFromNow(row.moment)}</TableCell>
-                              <TableCell align="center" >
-                                <ButtonGroup aria-label="outlined primary button group">
-                                  <Button color="primary" href={'/admin/pacientes/chamar/' + row.id}>CHAMAR</Button>
-                                  <Button color="secondary" onClick={() => handleDelete(row.id)}>CONFIRMAR</Button>
-                                </ButtonGroup>
-                              </TableCell>
+                              <TableCell align="center" >{row.status}</TableCell>
+                            
+                             
                             </TableRow>
                           ))}
                         </TableBody>
+                        
                       </Table>
+                      
                     </TableContainer>
+                    <Grid item  xs={12} sm={12} align="center" >
+                                <Button disabled={pacientes.length===0} color="secondary" variant="contained" className={classes.formControlButton} onClick={handleDelete}>EXCLUIR LISTA </Button>
+                      
+                              </Grid>
                   </Grid>
 
 

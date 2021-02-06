@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import clsx from 'clsx';
-
+import {getNomeUsuario} from '../services/auth'
 
 
 const drawerWidth = 240;
@@ -108,6 +108,7 @@ export default function MenuAdmin({title}) {
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             {title}
           </Typography>
+          {/*getNomeUsuario()*/}
           
         </Toolbar>
       </AppBar>

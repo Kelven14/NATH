@@ -3,9 +3,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
@@ -14,7 +11,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Footer from '../../../components/footer-admin';
 import api from '../../../services/api';
-import {setNomeUsuario, login, setIdUsuario, setTipoUsuario } from '../../../services/auth';
+import { setNomeUsuario, login, setIdUsuario, setTipoUsuario } from '../../../services/auth';
+import authService from '../../../services/authService';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -51,36 +49,23 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignInSide() {
   const classes = useStyles();
-  const[email,setEmail]=useState('');
-  const[senha,setSenha]=useState('');
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
   ;
 
-
-  async function handleSubmit(){
-  
-    const data={
-      usuario:email,
-      senha:senha,
+  async function handleSubmit() {
+    const data = {
+      usuario: email,
+      senha: senha,
     }
-   
-      console.log(data);
-  await api.post('/usuarios/logar',data)
-    .then(response=>{
-      if (response.status == 200) {
-        
-          login(response.data.token);
-          setIdUsuario(response.data.id_client);
-          setNomeUsuario(response.data.user_name);
-          setTipoUsuario(response.data.user_type);
-          window.location.href= '/admin'
-
-      }
-      else {
-        alert('Erro no servidor');
-       
-      }
-    })
-     
+    try{
+      await authService.signIn(data)
+      window.location.href = '/admin'
+    }catch (error){
+      console.log(error.response)
+    }
+    
+    
   }
 
 
@@ -96,48 +81,48 @@ export default function SignInSide() {
           <Typography component="h1" variant="h5">
             Login
           </Typography>
-          
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Digite seu email"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Digite sua senha"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              value={senha}
-              onChange={e => setSenha(e.target.value)}
-            />
-            <Button
-           
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              onClick={handleSubmit}
-            >
-              Entrar
+
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="E-mail"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Senha"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            value={senha}
+            onChange={e => setSenha(e.target.value)}
+          />
+          <Button
+
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={handleSubmit}
+          >
+            Entrar
             </Button>
-            
-            <Box mt={5}>
+
+          <Box mt={5}>
             <Footer />
           </Box>
-       
+
         </div>
       </Grid>
     </Grid>

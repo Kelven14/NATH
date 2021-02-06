@@ -82,7 +82,7 @@ export default function UsuariosListagem() {
   }, [])
 
   async function handleDelete(id) {
-    if (window.confirm("Deseja retirar o paciente da fila?")) {
+    if (window.confirm("Deseja exlcuir o usuário do sistema?")) {
       var result = await api.delete('usuarios/delete/' + id);
       if (result.status == 200) {
         window.location.href = '/admin/usuarios';
@@ -141,8 +141,8 @@ export default function UsuariosListagem() {
                               <TableCell align="center" >{row.senha}</TableCell>
                               <TableCell align="center" >
                                 <ButtonGroup aria-label="outlined primary button group">
-                                  <Button color="primary" href={'/admin/pacientes/chamar/' + row.id} disabled={row.nome==="Admin"}>Editar</Button>
-                                  <Button color="secondary" onClick={() => handleDelete(row.id)} disabled={row.nome==="Admin"}>Excluir</Button>
+                                  {/*<Button color="primary" href={'/admin/pacientes/chamar/' + row.id} disabled={row.nome==="Admin"}>Editar</Button>*/}
+                                  <Button color="primary" onClick={() => handleDelete(row.id)} disabled={row.nome==="Admin"}>Excluir</Button>
                                 </ButtonGroup>
                               </TableCell>
                             </TableRow>

@@ -66,13 +66,13 @@ public class PatientController {
 		return ResponseEntity.created(uri).body(dto);
 	}
 
-	@PutMapping("/{id}/called")
+	@PutMapping("/called/{id}")
 	public ResponseEntity<PatientDTO> setStatusCalled(@PathVariable Long id) {
 		PatientDTO dto = service.setStatusCalled(id);
 		return ResponseEntity.ok().body(dto);
 	}
 
-	@PutMapping("/{id}/attending")
+	@PutMapping("/attending/{id}")
 	public ResponseEntity<PatientDTO> setStatusAttending(@PathVariable Long id) {
 		PatientDTO dto = service.setStatusAttending(id);
 		return ResponseEntity.ok().body(dto);

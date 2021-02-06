@@ -26,6 +26,7 @@ import clsx from 'clsx';
 import api from '../../../services/api';
 import themeChip from '../../../theme/chip';
 
+
 import dayjs from 'dayjs';
 import 'dayjs/locale/pt-br';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -79,9 +80,22 @@ export default function UsuariosListagem() {
     loadUsuarios();
   }, [])
 
-  async function handleDelete(id) {
+  async function handleChamar(id) {
+    if (window.confirm("Deseja chamar o paciente?")) {
+      var result = await api.put('patients/called/' + id);
+      if (result.status == 200) {
+        window.location.href = '/admin/pacientes';
+      }
+      else {
+        alert('Ocorreu um erro. Por favor, tente novamente!')
+      }
+
+    }
+  }
+
+  async function handleConfirmar(id) {
     if (window.confirm("Deseja retirar o paciente da fila?")) {
-      var result = await api.delete('patients/delete/' + id);
+      var result = await api.put('patients/attending/' + id);
       if (result.status == 200) {
         window.location.href = '/admin/pacientes';
       }
@@ -120,6 +134,7 @@ export default function UsuariosListagem() {
                             <TableCell align="center">Senha</TableCell>
                             <TableCell align="center">Classificação</TableCell>
                             <TableCell align="center">Tempo de Espera</TableCell>
+                            <TableCell align="center">Status</TableCell>
                             <TableCell align="center">Opções</TableCell>
 
                           </TableRow>
@@ -145,11 +160,13 @@ export default function UsuariosListagem() {
                                 />} </ThemeProvider></>}
                               </TableCell>
                               <TableCell align="center" >{dateFromNow(row.moment)}</TableCell>
+                              <TableCell align="center" >{row.status}</TableCell>
                               <TableCell align="center" >
                                 <ButtonGroup aria-label="outlined primary button group">
-                                  <Button color="primary" href={'/admin/pacientes/chamar/' + row.id}>CHAMAR</Button>
-                                  <Button color="secondary" onClick={() => handleDelete(row.id)}>CONFIRMAR</Button>
+                                  <Button color="primary" onClick={() => handleChamar(row.id)}>CHAMAR</Button>
+                                  <Button color="secondary" onClick={() => handleConfirmar(row.id)}>CONFIRMAR</Button>
                                 </ButtonGroup>
+                                {/* href={'/admin/pacientes/chamar/' + row.id} */ }
                               </TableCell>
                             </TableRow>
                           ))}

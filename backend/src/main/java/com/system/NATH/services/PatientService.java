@@ -51,7 +51,7 @@ public class PatientService {
 	@Transactional
 	public PatientDTO insert(PatientDTO dto) {
 		Patient patient = new Patient(null, dto.getName(),dto.getPassword(),dto.getFlowchart(), dto.getPain(), dto.getPulse(), dto.getOximetry(),
-				Instant.now(), dto.getColor(), ListStatus.WAITING);
+				Instant.now(), dto.getColor(), ListStatus.WAITING,null);
 
 		patient = repository.save(patient);
 		return new PatientDTO(patient);
@@ -61,6 +61,7 @@ public class PatientService {
 	public PatientDTO setStatusAttending(Long id) {
 		Patient patient=repository.getOne(id);
 		patient.setStatus(ListStatus.ATTENDING);
+		patient.setMomentEnd(Instant.now());
 		patient = repository.save(patient);
 		return new PatientDTO(patient);
 	}

@@ -20,6 +20,7 @@ public class PatientDTO implements Serializable {
 	private double pulse;
 	private int oximetry;
 	private Instant moment;
+	private Instant momentEnd;
 	private ListColor color;
 	private ListStatus status;
 
@@ -28,7 +29,7 @@ public class PatientDTO implements Serializable {
 	}
 
 	public PatientDTO(Long id, String name,String password,ListFlowchart flowchart, int pain, double pulse, int oximetry, Instant moment, ListColor color,
-			ListStatus status) {
+			ListStatus status,Instant momentEnd) {
 		this.id = id;
 		this.name = name;
 		this.password=password;
@@ -37,6 +38,7 @@ public class PatientDTO implements Serializable {
 		this.pulse = pulse;
 		this.oximetry = oximetry;
 		this.moment = moment;
+		this.momentEnd=momentEnd;
 		this.color = color;
 		this.status = status;
 	}
@@ -50,6 +52,7 @@ public class PatientDTO implements Serializable {
 		pulse = entity.getPulse();
 		oximetry = entity.getOximetry();
 		moment = entity.getMoment();
+		momentEnd=entity.getMomentEnd();
 		color = entity.getColor();
 		status = entity.getStatus();
 	}
@@ -137,4 +140,14 @@ public class PatientDTO implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+	public Instant getMomentEnd() {
+		return momentEnd;
+	}
+
+	public void setMomentEnd(Instant momentEnd) {
+		this.momentEnd = momentEnd;
+	}
+	
+	
 }
