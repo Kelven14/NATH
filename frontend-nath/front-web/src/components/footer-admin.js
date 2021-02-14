@@ -7,7 +7,7 @@ export default function Copyright() {
       <Typography variant="body2" color="textSecondary" align="center">
         {'Copyright © '}
         <Link color="inherit" href="javascript:;">
-          Produzido por Kelven
+          Term paper FEI
         </Link>{' '}
         {new Date().getFullYear()}
         {'.'}

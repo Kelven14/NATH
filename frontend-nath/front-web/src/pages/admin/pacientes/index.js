@@ -164,7 +164,7 @@ export default function UsuariosListagem() {
                               <TableCell align="center" >
                                 <ButtonGroup aria-label="outlined primary button group">
                                   <Button color="primary" onClick={() => handleChamar(row.id)}>CHAMAR</Button>
-                                  <Button color="secondary" onClick={() => handleConfirmar(row.id)}>CONFIRMAR</Button>
+                                  <Button color="secondary" onClick={() => handleConfirmar(row.id)} disabled={row.status!=="CALLED"}>CONFIRMAR</Button>
                                 </ButtonGroup>
                                 {/* href={'/admin/pacientes/chamar/' + row.id} */ }
                               </TableCell>

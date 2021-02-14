@@ -12,12 +12,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import Footer from '../../../components/footer-admin';
 import api from '../../../services/api';
 import { setNomeUsuario, login, setIdUsuario, setTipoUsuario } from '../../../services/auth';
-import authService from '../../../services/authService';
+import themeBotao from '../../../theme/botao';
+import {ThemeProvider} from '@material-ui/core/styles';
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
+    
   },
   image: {
     backgroundImage: 'url(https://vencerocancer.org.br/wp-content/uploads/2018/08/2018_ivoc_tecnologia_saude_futurista_23805293_everythingposs_agosto-1000x563.jpg)',
@@ -33,10 +35,13 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+   
   },
+  
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: '#2196f3',
+
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -58,14 +63,20 @@ export default function SignInSide() {
       usuario: email,
       senha: senha,
     }
-    try{
-      await authService.signIn(data)
-      window.location.href = '/admin'
-    }catch (error){
-      console.log(error.response)
-    }
-    
-    
+    console.log(data);
+    await api.post('/usuarios/logar', data)
+      .then(response => {
+        if (response.status == 200) {
+          login(response.data.token);
+          setIdUsuario(response.data.nome);
+          setNomeUsuario(response.data.usuario);
+          setTipoUsuario(response.data.tipo);
+          window.location.href = '/admin'
+        }
+        else {
+          alert('Erro no servidor');
+        }
+      })
   }
 
 
@@ -73,7 +84,7 @@ export default function SignInSide() {
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square >
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
@@ -108,16 +119,19 @@ export default function SignInSide() {
             value={senha}
             onChange={e => setSenha(e.target.value)}
           />
-          <Button
+          <ThemeProvider theme={themeBotao}>
+            <Button
 
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={handleSubmit}
-          >
-            Entrar
-            </Button>
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={handleSubmit}
+            >
+              Entrar
+          </Button>
+          </ThemeProvider>
+
 
           <Box mt={5}>
             <Footer />

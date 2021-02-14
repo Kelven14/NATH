@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
   formControlButton: {
-    width: '40%',
+    width: '60%',
     marginTop:20,
   },
 

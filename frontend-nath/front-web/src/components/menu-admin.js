@@ -12,8 +12,6 @@ import Typography from '@material-ui/core/Typography';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import clsx from 'clsx';
-import {getNomeUsuario} from '../services/auth'
-
 
 const drawerWidth = 240;
 

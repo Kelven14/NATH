@@ -12,19 +12,13 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import ExitToApp from '@material-ui/icons/ExitToApp';
-import CheckBox from '@material-ui/icons/CheckBox';
 import Chip from '@material-ui/core/Chip';
 import { ThemeProvider } from '@material-ui/core/styles';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
-import clsx from 'clsx';
+
 import api from '../../../services/api';
-import themeChip from '../../../theme/chip';
+import themeBotao from '../../../theme/botao';
 
 import dayjs from 'dayjs';
 import 'dayjs/locale/pt-br';
@@ -130,7 +124,7 @@ export default function UsuariosListagem() {
                               <TableCell align="center" >{row.tipo == "Administrador" ? <Chip
                                 label="Administrador(a)"
                                 color="secondary"
-                              /> : <> <ThemeProvider theme={themeChip}>  {row.tipo == "Médico" ? <Chip
+                              /> : <> <ThemeProvider theme={themeBotao}>  {row.tipo == "Médico" ? <Chip
                                 label="Médico(a)"
                                 color="primary"
                               /> : <Chip
@@ -142,7 +136,7 @@ export default function UsuariosListagem() {
                               <TableCell align="center" >
                                 <ButtonGroup aria-label="outlined primary button group">
                                   {/*<Button color="primary" href={'/admin/pacientes/chamar/' + row.id} disabled={row.nome==="Admin"}>Editar</Button>*/}
-                                  <Button color="primary" onClick={() => handleDelete(row.id)} disabled={row.nome==="Admin"}>Excluir</Button>
+                                  <Button color="primary" onClick={() => handleDelete(row.id)} disabled={row.tipo==="Administrador"}>Excluir</Button>
                                 </ButtonGroup>
                               </TableCell>
                             </TableRow>

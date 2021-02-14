@@ -39,7 +39,7 @@ public class PatientService {
 	
 	@Transactional(readOnly = true)
 	public List<PatientDTO> findByAttending() {
-		List<Patient> list = repository.findOrderWithPatientAttending();
+		List<Patient> list = repository.findTop3OrderWithPatientAttending();
 		return list.stream().map(x -> new PatientDTO(x)).collect(Collectors.toList());
 	}
 	@Transactional
@@ -60,7 +60,7 @@ public class PatientService {
 	@Transactional
 	public PatientDTO setStatusAttending(Long id) {
 		Patient patient=repository.getOne(id);
-		patient.setStatus(ListStatus.ATTENDING);
+		patient.setStatus(ListStatus.ATTENDED);
 		patient.setMomentEnd(Instant.now());
 		patient = repository.save(patient);
 		return new PatientDTO(patient);

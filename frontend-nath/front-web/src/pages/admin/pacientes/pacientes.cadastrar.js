@@ -83,16 +83,17 @@
         color:cor
       }
      
-      console.log(data);
+     
       const response= await api.post('/patients',data)
 
       if (response.status == 201) {
-        window.location.href = '/admin/pacientes/all';
+        alert('Paciente cadastrado!')
+        window.location.href = '/admin/pacientes/cadastrar';
       }
       else {
         alert('Ocorreu um erro. Por favor, tente novamente!')
       }
-    
+
     }
 
     return (
