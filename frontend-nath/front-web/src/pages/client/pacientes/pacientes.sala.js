@@ -16,12 +16,6 @@ import CardHeader from '@material-ui/core/CardHeader';
 
 import StarIcon from '@material-ui/icons/StarBorder';
 
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import ExitToApp from '@material-ui/icons/ExitToApp';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import clsx from 'clsx';
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',

@@ -16,10 +16,8 @@ import Chip from '@material-ui/core/Chip';
 import { ThemeProvider } from '@material-ui/core/styles';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
-
 import api from '../../../services/api';
 import themeBotao from '../../../theme/botao';
-
 import dayjs from 'dayjs';
 import 'dayjs/locale/pt-br';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -78,7 +76,7 @@ export default function UsuariosListagem() {
   async function handleDelete(id) {
     if (window.confirm("Deseja exlcuir o usuário do sistema?")) {
       var result = await api.delete('usuarios/delete/' + id);
-      if (result.status == 200) {
+      if (result.status === 200) {
         window.location.href = '/admin/usuarios';
       }
       else {
@@ -121,10 +119,10 @@ export default function UsuariosListagem() {
                                 {row.nome}
                               </TableCell  >
                               <TableCell align="center" >{row.usuario}</TableCell>
-                              <TableCell align="center" >{row.tipo == "Administrador" ? <Chip
+                              <TableCell align="center" >{row.tipo === "Administrador" ? <Chip
                                 label="Administrador(a)"
                                 color="secondary"
-                              /> : <> <ThemeProvider theme={themeBotao}>  {row.tipo == "Médico" ? <Chip
+                              /> : <> <ThemeProvider theme={themeBotao}>  {row.tipo === "Médico" ? <Chip
                                 label="Médico(a)"
                                 color="primary"
                               /> : <Chip

@@ -58,6 +58,9 @@ export default function SignInSide() {
   const [senha, setSenha] = useState('');
   ;
 
+
+
+
   async function handleSubmit() {
     const data = {
       usuario: email,
@@ -66,17 +69,19 @@ export default function SignInSide() {
     console.log(data);
     await api.post('/usuarios/logar', data)
       .then(response => {
-        if (response.status == 200) {
+        if (response.status === 200) {
           login(response.data.token);
           setIdUsuario(response.data.nome);
           setNomeUsuario(response.data.usuario);
           setTipoUsuario(response.data.tipo);
+          
           window.location.href = '/admin'
         }
         else {
           alert('Erro no servidor');
         }
       })
+     
   }
 
 

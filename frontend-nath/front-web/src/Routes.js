@@ -11,7 +11,6 @@ import PacientesChamar from './pages/admin/pacientes/pacientes.chamar';
 import PacientesCadastrar from './pages/admin/pacientes/pacientes.cadastrar';
 
 import Usuarios from './pages/admin/usuarios';
-import UsuarioEditar from './pages/admin/usuarios/usuarios.editar';
 import UsuarioCadastrar from './pages/admin/usuarios/usuarios.cadastrar';
 
 // IMPORTS CLIENT
@@ -50,12 +49,11 @@ export default function Routes() {
                 <PrivateRoute path="/admin/pacientes" exact component={Pacientes} />
                 <PrivateRoute path="/admin/pacientes/all" exact component={PacientesAll} />
                 <PrivateRoute path="/admin/pacientes/cadastrar" exact component={PacientesCadastrar} />
-                <PrivateRoute path="/admin/pacientes/editar" exact component={PacientesEditar} />
+                <Route path="/admin/pacientes/editar" exact component={PacientesEditar} />
                 <PrivateRoute path="/admin/pacientes/chamar" exact component={PacientesChamar} />
-
                 <PrivateRoute path="/admin/usuarios" exact component={Usuarios} />
                 <PrivateRoute path="/admin/usuarios/cadastrar" exact component={UsuarioCadastrar} />
-                <PrivateRoute path="/admin/usuarios/editar/" exact component={UsuarioEditar} />
+             
                 <Route path="*">
                     <h1>Not found 404</h1>
                 </Route>
