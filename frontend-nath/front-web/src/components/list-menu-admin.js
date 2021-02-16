@@ -11,6 +11,7 @@ import ExitToApp from '@material-ui/icons/ExitToApp';
 import Help from '@material-ui/icons/Help';
 import AccountBox from '@material-ui/icons/AccountBox';
 import FeaturedPlayList from '@material-ui/icons/FeaturedPlayList';
+import { logout } from '../services/auth';
 
 export const mainListItems = (
   <div>
@@ -63,7 +64,7 @@ export const secondaryListItems = (
       </ListItemIcon>
       <ListItemText primary="Ajuda" />
     </ListItem> 
-    <ListItem button component="a"  href="/">
+    <ListItem button onClick={confirmSair}>
       <ListItemIcon>
         <ExitToApp />
       </ListItemIcon>
@@ -71,3 +72,10 @@ export const secondaryListItems = (
     </ListItem>
   </div>
 );
+
+ function confirmSair(){
+  if(window.confirm("Deseja realmente sair do sistema?")){
+    logout();
+    window.location.href='/'
+  }
+}

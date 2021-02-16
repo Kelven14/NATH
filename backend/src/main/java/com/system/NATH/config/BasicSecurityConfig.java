@@ -1,12 +1,8 @@
 package com.system.NATH.config;
 
-
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,9 +12,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-
-import com.system.NATH.dto.PatientDTO;
 
 
 @EnableWebSecurity
@@ -38,7 +31,6 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	
-
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -46,7 +38,6 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/usuarios/logar").permitAll()
 		.antMatchers("/patients/status/attending").permitAll()
 		.antMatchers("/patients/status/called").permitAll()
-		
 		.anyRequest().authenticated()
 		.and().httpBasic()
 		.and().sessionManagement()

@@ -16,7 +16,8 @@ import UsuarioCadastrar from './pages/admin/usuarios/usuarios.cadastrar';
 // IMPORTS CLIENT
 import Login from './pages/client/login';
 import PacientesSala from './pages/client/pacientes/pacientes.sala';
-import { isAuthenticated } from './services/wAuth';
+import { isAuthenticated } from './services/auth';
+
 
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -33,6 +34,22 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
     />
 );
 
+const GuestRoute = ({ component: Component, ...rest }) => (
+
+    <Route
+        {...rest}
+        render={props =>
+            isAuthenticated() ? (
+                <Redirect to={{ pathname: "/admin", state: { from: props.location } }} />
+            ) : (
+                   
+                    <Component {...props} />
+                )
+        }
+    />
+);
+
+
 
 
 export default function Routes() {
@@ -40,12 +57,11 @@ export default function Routes() {
         <BrowserRouter>
             <Switch>
                 {/* Rota Cliente */}
-                <Route path="/" exact component={Login} />
+                <GuestRoute path="/" exact component={Login} />
                 <Route path="/pacientes/sala" exact component={PacientesSala} />
 
                 {/* Rota Admin */}
                 <PrivateRoute path="/admin" exact component={Dashboard} />
-
                 <PrivateRoute path="/admin/pacientes" exact component={Pacientes} />
                 <PrivateRoute path="/admin/pacientes/all" exact component={PacientesAll} />
                 <PrivateRoute path="/admin/pacientes/cadastrar" exact component={PacientesCadastrar} />
