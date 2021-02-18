@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles,  makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -23,6 +23,17 @@ import MenuAdmin from '../../../components/menu-admin';
 
 dayjs.locale('pt-br');
 dayjs.extend(relativeTime);
+
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: "#3f51b5",
+    color: theme.palette.common.white,
+    fontSize: 20,
+  },
+  body: {
+    fontSize: 20,
+  },
+}))(TableCell);
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -103,22 +114,22 @@ export default function UsuariosListagem() {
                       <Table className={classes.table} aria-label="simple table">
                         <TableHead>
                           <TableRow>
-                            <TableCell align="left">Nome</TableCell>
-                            <TableCell align="center">Senha</TableCell>
-                            <TableCell align="center">Classificação</TableCell>
-                            <TableCell align="center">Tempo de Espera</TableCell>
-                            <TableCell align="center">Status</TableCell>
+                            <StyledTableCell align="left">Nome</StyledTableCell>
+                            <StyledTableCell align="center">Senha</StyledTableCell>
+                            <StyledTableCell align="center">Classificação</StyledTableCell>
+                            <StyledTableCell align="center">Tempo de Espera</StyledTableCell>
+                            <StyledTableCell align="center">Status</StyledTableCell>
                           </TableRow>
                         </TableHead>
                         <TableBody>
                           {pacientes.map((row) => (
                             <TableRow key={row.id}>
-                              <TableCell align="left" component="th" scope="row">
+                              <StyledTableCell align="left" component="th" scope="row">
                                 {row.name}
-                              </TableCell  >
-                              <TableCell align="center" >{row.password}</TableCell>
+                              </StyledTableCell  >
+                              <StyledTableCell align="center" >{row.password}</StyledTableCell>
 
-                              <TableCell align="center" >{row.color == "VERMELHO" ? <Chip
+                              <StyledTableCell align="center" >{row.color == "VERMELHO" ? <Chip
                                 label="VERMELHO"
                                 color="secondary"
                               /> : <> <ThemeProvider theme={themeChip}>  {row.color == "LARANJA" ? <Chip
@@ -129,9 +140,9 @@ export default function UsuariosListagem() {
                                   label="AMARELO"
                                   color="secondary"
                                 />} </ThemeProvider></>}
-                              </TableCell>
-                              <TableCell align="center" >{dateFromNow(row.moment)}</TableCell>
-                              <TableCell align="center" >{row.status}</TableCell>
+                              </StyledTableCell>
+                              <StyledTableCell align="center" >{dateFromNow(row.moment)}</StyledTableCell>
+                              <StyledTableCell align="center" >{row.status}</StyledTableCell>
                             
                              
                             </TableRow>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
@@ -25,6 +25,17 @@ import MenuAdmin from '../../../components/menu-admin';
 
 dayjs.locale('pt-br');
 dayjs.extend(relativeTime);
+
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: "#3f51b5",
+    color: theme.palette.common.white,
+    fontSize: 20,
+  },
+  body: {
+    fontSize: 15,
+  },
+}))(TableCell);
 
 
 
@@ -104,22 +115,22 @@ export default function UsuariosListagem() {
                       <Table className={classes.table} aria-label="simple table">
                         <TableHead>
                           <TableRow>
-                            <TableCell align="left">Nome</TableCell>
-                            <TableCell align="center">Email</TableCell>
-                            <TableCell align="center">Tipo</TableCell>
-                            <TableCell align="center">Senha</TableCell>
-                            <TableCell align="center">Opções</TableCell>
+                            <StyledTableCell align="left">Nome</StyledTableCell>
+                            <StyledTableCell align="center">Email</StyledTableCell>
+                            <StyledTableCell align="center">Tipo</StyledTableCell>
+                            <StyledTableCell align="center">Senha</StyledTableCell>
+                            <StyledTableCell align="center">Opções</StyledTableCell>
 
                           </TableRow>
                         </TableHead>
                         <TableBody>
                           {usuarios.map((row) => (
                             <TableRow key={row.id}>
-                              <TableCell align="left" component="th" scope="row">
+                              <StyledTableCell align="left" component="th" scope="row">
                                 {row.nome}
-                              </TableCell  >
-                              <TableCell align="center" >{row.usuario}</TableCell>
-                              <TableCell align="center" >{row.tipo === "Administrador" ? <Chip
+                              </StyledTableCell  >
+                              <StyledTableCell align="center" >{row.usuario}</StyledTableCell>
+                              <StyledTableCell align="center" >{row.tipo === "Administrador" ? <Chip
                                 label="Administrador(a)"
                                 color="secondary"
                               /> : <> <ThemeProvider theme={themeBotao}>  {row.tipo === "Médico" ? <Chip
@@ -129,14 +140,14 @@ export default function UsuariosListagem() {
                                   label="Enfermeiro(a)"
                                   color="secondary"
                                 />} </ThemeProvider></>}
-                              </TableCell>
-                              <TableCell align="center" >{row.senha}</TableCell>
-                              <TableCell align="center" >
+                              </StyledTableCell>
+                              <StyledTableCell align="center" >{row.senha}</StyledTableCell>
+                              <StyledTableCell align="center" >
                                 <ButtonGroup aria-label="outlined primary button group">
                                   {/*<Button color="primary" href={'/admin/pacientes/chamar/' + row.id} disabled={row.nome==="Admin"}>Editar</Button>*/}
                                   <Button color="primary" onClick={() => handleDelete(row.id)} disabled={row.tipo==="Administrador"}>Excluir</Button>
                                 </ButtonGroup>
-                              </TableCell>
+                              </StyledTableCell>
                             </TableRow>
                           ))}
                         </TableBody>

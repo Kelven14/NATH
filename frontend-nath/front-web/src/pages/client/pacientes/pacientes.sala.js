@@ -1,82 +1,97 @@
 import React, { useState, useEffect } from 'react';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
+import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-
 import Paper from '@material-ui/core/Paper';
-
-import api from '../../../services/api';
-
-
-
-
+import Footer from '../../../components/footer-admin'
+import api from '../../../services/api'
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
+import dayjs from 'dayjs';
+import 'dayjs/locale/pt-br';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
-import StarIcon from '@material-ui/icons/StarBorder';
+dayjs.locale('pt-br');
+dayjs.extend(relativeTime);
+
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: "#3f51b5",
+    color: theme.palette.common.white,
+    fontSize: 25,
+  },
+  body: {
+    fontSize: 25,
+  },
+}))(TableCell);
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: '100vh',
-  },
-
-  image: {
-    backgroundImage: 'url(/images/background.jpg)',
-    backgroundPosition: 'center',
-    backgroundSize: 'cover',
-    backgroundRepeat: 'none',
-    padding: theme.spacing(2),
-    textAlign: 'center',
-  },
-  avatar: {
-    background: theme.palette.primary.main,
-    marginBottom: theme.spacing(1),
-  },
-  button: {
-    marginTop: theme.spacing(1),
-  },
-  form: {
-    margin: theme.spacing(2, 4),
-  },
-  heroContent: {
-    padding: theme.spacing(8, 0, 6),
-  },
-  cardHeader: {
-    backgroundColor:
-      theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[700],
-
-  },
-  cardPricing: {
     display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'baseline',
-    marginBottom: theme.spacing(2),
+
   },
+  title: {
+    flexGrow: 1,
+  },
+  appBarSpacer: theme.mixins.toolbar,
+  content: {
+    flexGrow: 1,
+    height: '100vh',
+    backgroundColor:'#eeeeee'
+    
+  },
+  container: {
+    padding: '5px'
+  },
+
   paper: {
-    margin: theme.spacing(8, 4),
-    alignItems: 'center',
-    width: '100%',
-    backgroundColor: '#093170'
+    padding: 15,
+    display: 'flex',
+    flexDirection: 'column',
+
   },
   paper1: {
-    marginTop: theme.spacing(22),
     alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  formControl: {
+    width: '100%'
+  },
+  formControlButton: {
     width: '100%',
-
-    backgroundColor: '#093170'
+    marginTop: 20,
   },
-  direita: {
-
-    backgroundColor: '#093170'
+  cardBaixo:{
+    height:'400px',
+    width:'100%',
+    borderColor:"#cfe8fc"
   },
-  tamanhoCard: {
-    margin: theme.spacing(6),
+
+  cardCima:{
+    height:'180px',
+    width:'50%',
+    border:'1'
+  },
+  table:{
+    fontSize: 20,
   }
+
 }));
 
+function dateFromNow(date) {
+  return dayjs(date).format('HH:mm:ss');
+}
 
-function Sala() {
+export default function PacientesCadastrar() {
   const classes = useStyles();
   const [pacientes, setPacientes] = useState([])
   const [pacientesAtend, setPacientesAtend] = useState([])
@@ -95,56 +110,98 @@ function Sala() {
     loadUsuarios2();
   }, [])
 
-
   return (
-    <Grid container className={classes.root}>
-    
-      <Grid
-        item
-        container
-        direction="column"
-        justify="center"
-        alignItems="center"
-        xs={false} sm={4} md={12}
-        className={classes.image}
-      >
-        <Typography style={{ color: '#fff', fontSize: 35, lineHeight: '45px' }}>
-          
-            Espere a sua senha ser chamada!
-          
-        </Typography>
-        <Grid item xs={12} sm={8} md={3} component={Paper} elevation={6} square className={classes.paper}>
+    <div className={classes.root}>
+      <main className={classes.content}>
+        <Container maxWidth="lg" className={classes.container} >
+          <Grid container spacing={3} style={{ align: "center" }} >
+            <Grid item sm={12}   >
 
-          {pacientes.map((tier) => (
-            <Grid item key={tier.id} xs={12} sm={6} md={12}  >
-              <Card className={classes.tamanhoCard}>
-                <CardHeader
-                  title='SENHA'
-                  titleTypographyProps={{ align: 'center' }}
-                  subheaderTypographyProps={{ align: 'center' }}
-                  action={tier.title === 'Pro' ? <StarIcon /> : null}
-                  className={classes.cardHeader}
-                >
+              <Grid item xs={12} sm={8} md={12} height="100px"  className={classes.paper}>
 
-                </CardHeader>
-
-                <CardContent>
-                  <div className={classes.cardPricing}>
-                    <Typography component="h2" variant="h3" color="textPrimary">
-                      {tier.password}
+                <Grid container spacing={3}>
+                  <Grid item xs={12} sm={6} md={6} component={Card} style={{ backgroundColor: '#3f51b5' }} className={classes.cardCima} borderColor=" #FF0000">
+                    <Typography align="center" component="h1" variant="h2" style={{ color: '#fff' }}>
+                      Senha
                     </Typography>
-                  </div>
+                    {pacientes.map((tier) => (
+
+                      <Typography align="center" component="h1" variant="h2" style={{ color: '#fff' }}>
+                        {tier.password}
+                      </Typography>
+
+                    ))}
+
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={6} component={Card} className={classes.cardCima}>
+                    <Typography align="center" component="h1" variant="h2" style={{ color: '#3f51b5' }}>
+                      Sala
+                    </Typography>
+                    {pacientes.map((tier) => (
+                      <Typography align="center" component="h1" variant="h2" style={{ color: '#3f51b5' }}>
+                        {tier.senha === null ? " " : "1"}
+
+                      </Typography>
+                    ))}
+
+                  </Grid>
+
+                </Grid>
+              </Grid>
+            </Grid>
+
+            <Grid item sm={12} marginTop="0">
+              <Card className={classes.cardBaixo}>
+                <CardContent>
+                <Typography align="center" component="h1" variant="h4" style={{ color: '#3f51b5' }}>
+                     Histórico de chamadas
+                    </Typography>
+                  <h2 align="center"> </h2>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} sm={12}>
+                      <TableContainer component={Paper}>
+                        <Table className={classes.table} aria-label="simple table">
+                          <TableHead>
+                            <TableRow>
+                            <StyledTableCell align="center">Senha</StyledTableCell>
+                              <StyledTableCell align="center">Paciente</StyledTableCell>
+                              <StyledTableCell align="center">Sala</StyledTableCell>
+                             
+                              <StyledTableCell align="center">Horário de chamada</StyledTableCell>
+                            
+                            </TableRow>
+                          </TableHead>
+                          <TableBody>
+                            {pacientesAtend.map((row) => (
+                              <TableRow key={row.id}>
+                                  <StyledTableCell align="center"  >{row.password}</StyledTableCell>
+                                <StyledTableCell align="center" component="th" scope="row">
+                                  {row.name}
+                                </StyledTableCell  >
+                                <StyledTableCell align="center"  >{1}</StyledTableCell>
+
+                                <StyledTableCell align="center" >{dateFromNow(row.momentEnd)}</StyledTableCell>
+                                
+
+
+                              </TableRow>
+                            ))}
+                          </TableBody>
+
+                        </Table>
+
+                      </TableContainer>
+                    </Grid>
+                  </Grid>
                 </CardContent>
               </Card>
             </Grid>
-          ))}
-
-        </Grid>
-
-      </Grid>
-    
-    </Grid>
+          </Grid>
+          <Box pt={2}>
+            <Footer />
+          </Box>
+        </Container>
+      </main>
+    </div>
   );
 }
-
-export default Sala;

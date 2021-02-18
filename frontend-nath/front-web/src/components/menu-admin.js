@@ -72,11 +72,7 @@ const useStyles = makeStyles((theme) => ({
         width: theme.spacing(9),
       },
     },
-    appBarSpacer: theme.mixins.toolbar,
-
-    fixedHeight: {
-      height: 240,
-    },
+    
   }));
 
 export default function MenuAdmin({title}) {
@@ -107,7 +103,7 @@ export default function MenuAdmin({title}) {
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             {title}
           </Typography>
-         {`Olá, ${getNomeUsuario()}`}
+         <h2>{`Olá, ${getNomeUsuario()}`} </h2>
         </Toolbar>
       </AppBar>
 
