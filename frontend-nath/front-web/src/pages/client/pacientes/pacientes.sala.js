@@ -56,12 +56,13 @@ const useStyles = makeStyles((theme) => ({
     padding: 15,
     display: 'flex',
     flexDirection: 'column',
-
+    justify: 'center'
   },
   paper1: {
     alignItems: 'center',
     display: 'flex',
     flexDirection: 'row',
+    justifyContent: 'center'
   },
   formControl: {
     width: '100%'
@@ -115,9 +116,9 @@ export default function PacientesCadastrar() {
       <main className={classes.content}>
         <Container maxWidth="lg" className={classes.container} >
           <Grid container spacing={3} style={{ align: "center" }} >
-            <Grid item sm={12}   >
+            <Grid item  xs={12} sm={12}  >
 
-              <Grid item xs={12} sm={8} md={12} height="100px"  className={classes.paper}>
+              <Grid item  xs={12} md={12}  className={classes.paper} style={{ backgroundColor: '#3f51b5' }} >
 
                 <Grid container spacing={3}>
                   <Grid item xs={12} sm={6} md={6} component={Card} style={{ backgroundColor: '#3f51b5' }} className={classes.cardCima} borderColor=" #FF0000">

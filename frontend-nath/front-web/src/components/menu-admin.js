@@ -100,9 +100,7 @@ export default function MenuAdmin({title}) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            {title}
-          </Typography>
+        
          <h2>{`Olá, ${getNomeUsuario()}`} </h2>
         </Toolbar>
       </AppBar>
