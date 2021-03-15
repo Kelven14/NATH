@@ -167,7 +167,7 @@
                         type="number"
                         InputProps={{
                             inputProps: {
-                                max: 100, min: 0
+                                max: 300, min: 0
                             }
                         }}
                         value={pulsação}
