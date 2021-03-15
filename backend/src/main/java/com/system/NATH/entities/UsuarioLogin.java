@@ -2,6 +2,8 @@ package com.system.NATH.entities;
 
 public class UsuarioLogin {
 	
+	private long id;
+	
 	private String nome;
 	
 	private String usuario;
@@ -11,6 +13,18 @@ public class UsuarioLogin {
 	private String token;
 	
 	private ListUsuario tipo;
+
+	private long sala;
+	
+	
+	
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
 
 	public String getNome() {
 		return nome;
@@ -52,6 +66,15 @@ public class UsuarioLogin {
 		this.tipo = tipo;
 	}
 
+	public long getSala() {
+		return sala;
+	}
+
+	public void setSala(long sala) {
+		this.sala = sala;
+	}
+
+	
 
 	
 }

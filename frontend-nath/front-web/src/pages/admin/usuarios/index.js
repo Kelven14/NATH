@@ -118,7 +118,7 @@ export default function UsuariosListagem() {
                             <StyledTableCell align="left">Nome</StyledTableCell>
                             <StyledTableCell align="center">Email</StyledTableCell>
                             <StyledTableCell align="center">Tipo</StyledTableCell>
-                            <StyledTableCell align="center">Senha</StyledTableCell>
+                            <StyledTableCell align="center">Sala</StyledTableCell>
                             <StyledTableCell align="center">Opções</StyledTableCell>
 
                           </TableRow>
@@ -141,7 +141,7 @@ export default function UsuariosListagem() {
                                   color="secondary"
                                 />} </ThemeProvider></>}
                               </StyledTableCell>
-                              <StyledTableCell align="center" >{row.senha}</StyledTableCell>
+                              <StyledTableCell align="center" >{row.sala}</StyledTableCell>
                               <StyledTableCell align="center" >
                                 <ButtonGroup aria-label="outlined primary button group">
                                   {/*<Button color="primary" href={'/admin/pacientes/chamar/' + row.id} disabled={row.nome==="Admin"}>Editar</Button>*/}

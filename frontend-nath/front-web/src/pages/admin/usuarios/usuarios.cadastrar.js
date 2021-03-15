@@ -54,16 +54,7 @@ export default function UsuarioCadastrar() {
   const [usuario, setUsuario] = useState('');
   const [senha, setSenha] = useState('');
   const [tipo, setTipo] = useState('');
-
-  {/** const{ form,setForm}=useState(
-    {
-      nome:'',
-      email:'',
-      senha:'',
-      tipo:'',
-    }
-  ); */}
-
+  const [sala, setSala] = useState('');
   
 
   async function handleSubmit(){
@@ -72,7 +63,8 @@ export default function UsuarioCadastrar() {
       nome:nome,
       usuario:usuario,
       senha:senha,
-      tipo:tipo
+      tipo:tipo,
+      sala:sala
     }
     const response= await api.post('/usuarios/cadastrar',data)
     if (response.status == 200) {
@@ -96,7 +88,7 @@ export default function UsuarioCadastrar() {
               <Paper className={classes.paper}>
                 <h2 align="center">Cadastro de Usuários</h2>
                 <Grid container spacing={3}>
-                  <Grid item xs={12} sm={12}>
+                  <Grid item xs={12} sm={9}>
                     <TextField
                       required
                       id="nome"
@@ -106,6 +98,20 @@ export default function UsuarioCadastrar() {
                       autoComplete="nome"
                       value={nome}
                       onChange={e => setNome(e.target.value)}
+                      variant="outlined"
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={3}>
+                    <TextField
+                      required
+                      type="password"
+                      id="senha"
+                      name="senha"
+                      label="Senha"
+                      fullWidth
+                      autoComplete="senha"
+                      value={senha}
+                      onChange={e => setSenha(e.target.value)}
                       variant="outlined"
                     />
                   </Grid>
@@ -142,17 +148,23 @@ export default function UsuarioCadastrar() {
                   <Grid item xs={12} sm={3}>
                     <TextField
                       required
-                      type="password"
-                      id="senha"
-                      name="senha"
-                      label="Senha"
+                      type="number"
+                      InputProps={{
+                          inputProps: {
+                              max: 20, min: 0
+                          }
+                      }}
+                      id="sala"
+                      name="sala"
+                      label="Sala"
                       fullWidth
-                      autoComplete="senha"
-                      value={senha}
-                      onChange={e => setSenha(e.target.value)}
+                      autoComplete="sala"
+                      value={sala}
+                      onChange={e => setSala(e.target.value)}
                       variant="outlined"
                     />
                   </Grid>
+                
                   <Grid item xs={12} sm={12}>
                     <Button className={classes.formControlButton} variant="contained" onClick={handleSubmit} color="primary">
                       Cadastrar

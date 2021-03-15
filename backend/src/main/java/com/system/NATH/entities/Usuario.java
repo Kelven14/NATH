@@ -29,8 +29,12 @@ public class Usuario  {
 	@NotNull
 	@Size(min = 5)
 	private String senha;
-	
+
+	@NotNull
 	private ListUsuario tipo;
+	
+	@NotNull
+	private Long sala;
 
 	public Long getId() {
 		return id;
@@ -72,7 +76,14 @@ public class Usuario  {
 		this.tipo = tipo;
 	}
 
-	
+	public Long getSala() {
+		return sala;
+	}
 
+	public void setSala(Long sala) {
+		this.sala = sala;
+	}
+
+	
 	
 }
