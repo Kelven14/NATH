@@ -139,7 +139,6 @@ export default function UsuarioCadastrar() {
                         onChange={e => setTipo(e.target.value)}
                         variant="outlined"
                       >
-                        <MenuItem value={0}>Administrador(a)</MenuItem>
                         <MenuItem value={1}>Médico(a)</MenuItem>
                         <MenuItem value={2}>Enfermeiro(a)</MenuItem>
                       </Select>
