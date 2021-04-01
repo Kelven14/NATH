@@ -105,8 +105,6 @@ function SignIn() {
   const classes = useStyles();
   const [pacientes, setPacientes] = useState([])
   const [pacientesAtend, setPacientesAtend] = useState([])
-
-
   useEffect(() => {
     async function loadUsuarios() {
       const response = await api.get('/patients/status/called');

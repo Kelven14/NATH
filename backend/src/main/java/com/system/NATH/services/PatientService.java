@@ -26,6 +26,13 @@ public class PatientService {
 	}
 	
 	@Transactional(readOnly = true)
+	public PatientDTO findByWaitingOne() {
+		List<Patient> list = repository.findOrderWithPatient();
+		List<PatientDTO> a=list.stream().map(x -> new PatientDTO(x)).collect(Collectors.toList()).subList(0, 1);
+		return setStatusCalled(a.get(0).getId());
+	}
+	
+	@Transactional(readOnly = true)
 	public List<PatientDTO> findByWaiting() {
 		List<Patient> list = repository.findOrderWithPatient();
 		return list.stream().map(x -> new PatientDTO(x)).collect(Collectors.toList());
@@ -39,7 +46,7 @@ public class PatientService {
 	
 	@Transactional(readOnly = true)
 	public List<PatientDTO> findByAttending() {
-		List<Patient> list = repository.findTop3OrderWithPatientAttending();
+		List<Patient> list = repository.findOrderWithPatientAttending();
 		return list.stream().map(x -> new PatientDTO(x)).collect(Collectors.toList());
 	}
 	@Transactional
@@ -51,7 +58,7 @@ public class PatientService {
 	@Transactional
 	public PatientDTO insert(PatientDTO dto) {
 		Patient patient = new Patient(null, dto.getName(),dto.getPassword(),dto.getFlowchart(), dto.getPain(), dto.getPulse(), dto.getOximetry(),
-				Instant.now(), dto.getColor(), ListStatus.WAITING,null);
+				Instant.now(), dto.getColor(), ListStatus.AGUARDANDO,null,dto.getTemperature());
 
 		patient = repository.save(patient);
 		return new PatientDTO(patient);
@@ -60,7 +67,15 @@ public class PatientService {
 	@Transactional
 	public PatientDTO setStatusAttending(Long id) {
 		Patient patient=repository.getOne(id);
-		patient.setStatus(ListStatus.ATTENDED);
+		patient.setStatus(ListStatus.CONSULTÓRIO);
+		patient.setMomentEnd(Instant.now());
+		patient = repository.save(patient);
+		return new PatientDTO(patient);
+	}
+	@Transactional
+	public PatientDTO setStatusRetirar(Long id) {
+		Patient patient=repository.getOne(id);
+		patient.setStatus(ListStatus.RETIRADO);
 		patient.setMomentEnd(Instant.now());
 		patient = repository.save(patient);
 		return new PatientDTO(patient);
@@ -68,10 +83,27 @@ public class PatientService {
 	@Transactional
 	public PatientDTO setStatusCalled(Long id) {
 		Patient patient=repository.getOne(id);
-		patient.setStatus(ListStatus.CALLED);
+		patient.setStatus(ListStatus.CHAMADO);
 		patient = repository.save(patient);
 		return new PatientDTO(patient);
 	}
+	@Transactional
+	public PatientDTO setStatusMedication(Long id) {
+		Patient patient=repository.getOne(id);
+		patient.setStatus(ListStatus.MEDICAÇÃO);
+		patient = repository.save(patient);
+		return new PatientDTO(patient);
+	}
+	
+	@Transactional
+	public PatientDTO setStatusFinish(Long id) {
+		Patient patient=repository.getOne(id);
+		patient.setStatus(ListStatus.ATENDIDO);
+		patient = repository.save(patient);
+		return new PatientDTO(patient);
+	}
+
+	
 	
 	@Transactional	
 	public void deleteById(Long id) {

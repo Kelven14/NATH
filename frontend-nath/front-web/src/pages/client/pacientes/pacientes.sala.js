@@ -45,8 +45,8 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     height: '100vh',
-    backgroundColor:'#eeeeee'
-    
+    backgroundColor: '#eeeeee'
+
   },
   container: {
     padding: '5px'
@@ -71,18 +71,18 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     marginTop: 20,
   },
-  cardBaixo:{
-    height:'400px',
-    width:'100%',
-    borderColor:"#cfe8fc"
+  cardBaixo: {
+    height: '400px',
+    width: '100%',
+    borderColor: "#cfe8fc"
   },
 
-  cardCima:{
-    height:'180px',
-    width:'50%',
-    border:'1'
+  cardCima: {
+    height: '200px',
+    width: '50%',
+    border: '1'
   },
-  table:{
+  table: {
     fontSize: 20,
   }
 
@@ -96,7 +96,6 @@ export default function PacientesCadastrar() {
   const classes = useStyles();
   const [pacientes, setPacientes] = useState([])
   const [pacientesAtend, setPacientesAtend] = useState([])
-
 
   useEffect(() => {
     async function loadUsuarios() {
@@ -116,9 +115,9 @@ export default function PacientesCadastrar() {
       <main className={classes.content}>
         <Container maxWidth="lg" className={classes.container} >
           <Grid container spacing={3} style={{ align: "center" }} >
-            <Grid item  xs={12} sm={12}  >
+            <Grid item xs={12} sm={12}  >
 
-              <Grid item  xs={12} md={12}  className={classes.paper} style={{ backgroundColor: '#3f51b5' }} >
+              <Grid item xs={12} md={12} className={classes.paper} style={{ backgroundColor: '#3f51b5' }} >
 
                 <Grid container spacing={3}>
                   <Grid item xs={12} sm={6} md={6} component={Card} style={{ backgroundColor: '#3f51b5' }} className={classes.cardCima} borderColor=" #FF0000">
@@ -144,18 +143,15 @@ export default function PacientesCadastrar() {
 
                       </Typography>
                     ))}
-
                   </Grid>
-
                 </Grid>
               </Grid>
             </Grid>
-
             <Grid item sm={12} marginTop="0">
               <Card className={classes.cardBaixo}>
                 <CardContent>
-                <Typography align="center" component="h1" variant="h4" style={{ color: '#3f51b5' }}>
-                     Histórico de chamadas
+                  <Typography align="center" component="h1" variant="h4" style={{ color: '#3f51b5' }}>
+                    Histórico de chamadas
                     </Typography>
                   <h2 align="center"> </h2>
                   <Grid container spacing={2}>
@@ -164,27 +160,22 @@ export default function PacientesCadastrar() {
                         <Table className={classes.table} aria-label="simple table">
                           <TableHead>
                             <TableRow>
-                            <StyledTableCell align="center">Senha</StyledTableCell>
+                              <StyledTableCell align="center">Senha</StyledTableCell>
                               <StyledTableCell align="center">Paciente</StyledTableCell>
                               <StyledTableCell align="center">Sala</StyledTableCell>
-                             
                               <StyledTableCell align="center">Horário de chamada</StyledTableCell>
-                            
                             </TableRow>
                           </TableHead>
                           <TableBody>
                             {pacientesAtend.map((row) => (
                               <TableRow key={row.id}>
-                                  <StyledTableCell align="center"  >{row.password}</StyledTableCell>
+                                <StyledTableCell align="center"  >{row.password}</StyledTableCell>
                                 <StyledTableCell align="center" component="th" scope="row">
                                   {row.name}
                                 </StyledTableCell  >
                                 <StyledTableCell align="center"  >{1}</StyledTableCell>
 
                                 <StyledTableCell align="center" >{dateFromNow(row.momentEnd)}</StyledTableCell>
-                                
-
-
                               </TableRow>
                             ))}
                           </TableBody>
@@ -205,4 +196,4 @@ export default function PacientesCadastrar() {
       </main>
     </div>
   );
-}
+} 

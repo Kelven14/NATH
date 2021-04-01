@@ -2,5 +2,5 @@ package com.system.NATH.entities;
 
 public enum ListStatus {
 
-	WAITING,CALLED,ATTENDED;
+	AGUARDANDO,CHAMADO,CONSULTÓRIO,ATENDIDO,MEDICAÇÃO,RETIRADO ;
 }

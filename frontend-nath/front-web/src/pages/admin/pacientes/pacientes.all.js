@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { withStyles,  makeStyles } from '@material-ui/core/styles';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -16,6 +16,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import api from '../../../services/api';
 import themeChip from '../../../theme/chip';
+import themeChip2 from '../../../theme/chip2';
 import dayjs from 'dayjs';
 import 'dayjs/locale/pt-br';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -61,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
   },
   formControlButton: {
     width: '60%',
-    marginTop:20,
+    marginTop: 20,
   },
 
 }));
@@ -85,7 +86,7 @@ export default function UsuariosListagem() {
   }, [])
 
 
-     async function handleDelete() {
+  async function handleDelete() {
     if (window.confirm("Deseja Exluir essa lista de pacientes?")) {
       var result = await api.delete('patients/delete/All/finishDay');
       if (result.status == 200) {
@@ -132,30 +133,33 @@ export default function UsuariosListagem() {
                               <StyledTableCell align="center" >{row.color == "VERMELHO" ? <Chip
                                 label="VERMELHO"
                                 color="secondary"
-                              /> : <> <ThemeProvider theme={themeChip}>  {row.color == "LARANJA" ? <Chip
+                              /> : <> <ThemeProvider theme={themeChip}>{row.color == "LARANJA" ? <Chip
                                 label="LARANJA"
-
+                                color="primary"
+                              /> : <> {row.color == "AMARELO" ? <Chip
+                                label="AMARELO"
+                                color="secondary"
+                              /> : <> <ThemeProvider theme={themeChip2}>{row.color == "VERDE" ? <Chip
+                                label="VERDE"
                                 color="primary"
                               /> : <Chip
-                                  label="AMARELO"
-                                  color="secondary"
-                                />} </ThemeProvider></>}
+                                label="AZUL"
+                                color="secondary"
+                              />}</ThemeProvider></>} </>}</ThemeProvider></>}
                               </StyledTableCell>
                               <StyledTableCell align="center" >{dateFromNow(row.moment)}</StyledTableCell>
                               <StyledTableCell align="center" >{row.status}</StyledTableCell>
-                            
-                             
+
                             </TableRow>
                           ))}
                         </TableBody>
-                        
+
                       </Table>
-                      
+
                     </TableContainer>
-                    <Grid item  xs={12} sm={12} align="center" >
-                                <Button disabled={pacientes.length===0} color="secondary" variant="contained" className={classes.formControlButton} onClick={handleDelete}>EXCLUIR LISTA </Button>
-                      
-                              </Grid>
+                    {/* <Grid item xs={12} sm={12} align="center" >
+                      <Button disabled={pacientes.length === 0} color="secondary" variant="contained" className={classes.formControlButton} onClick={handleDelete}>EXCLUIR LISTA </Button>
+                    </Grid> */}
                   </Grid>
 
 

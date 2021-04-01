@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {  withStyles, makeStyles } from '@material-ui/core/styles';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
@@ -12,24 +12,21 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import ExitToApp from '@material-ui/icons/ExitToApp';
-import CheckBox from '@material-ui/icons/CheckBox';
 import Chip from '@material-ui/core/Chip';
 import { ThemeProvider } from '@material-ui/core/styles';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
 import clsx from 'clsx';
 import api from '../../../services/api';
 import themeChip from '../../../theme/chip';
-
-
+import themeChip2 from '../../../theme/chip2';
 import dayjs from 'dayjs';
 import 'dayjs/locale/pt-br';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { useHistory } from "react-router-dom";
 
 dayjs.locale('pt-br');
 dayjs.extend(relativeTime);
@@ -77,9 +74,11 @@ function dateFromNow(date) {
 
 
 export default function UsuariosListagem() {
+  const history = useHistory();
   const classes = useStyles();
-
   const [pacientes, setPacientes] = useState([])
+  const primeiro=pacientes[0]
+  const [contador, setContador] = useState(0)
 
   useEffect(() => {
     async function loadUsuarios() {
@@ -87,13 +86,23 @@ export default function UsuariosListagem() {
       setPacientes(response.data)
     }
     loadUsuarios();
+
   }, [])
 
-  async function handleChamar(id) {
+  async function loadUsuarios() {
+    const response = await api.get('patients/status/waiting');
+    setPacientes(response.data)
+  }
+
+  async function handleChamar() {
     if (window.confirm("Deseja chamar o paciente?")) {
-      var result = await api.put('patients/called/' + id);
+
+      var result = await api.get('patients/status/waitingOne');
+      console.log(result)
       if (result.status == 200) {
-        window.location.href = '/admin/pacientes';
+    
+        history.push('/admin/pacientes')
+        loadUsuarios();
       }
       else {
         alert('Ocorreu um erro. Por favor, tente novamente!')
@@ -102,11 +111,28 @@ export default function UsuariosListagem() {
     }
   }
 
-  async function handleConfirmar(id) {
-    if (window.confirm("Deseja retirar o paciente da fila?")) {
-      var result = await api.put('patients/attending/' + id);
+  async function handleConfirmar() {
+    if (window.confirm("Paciente chegou na sala?")) {
+      var result = await api.put('patients/attending/' + primeiro.id);
       if (result.status == 200) {
-        window.location.href = '/admin/pacientes';
+        history.push('/admin/paciente/info/'+primeiro.id)
+        setContador(0);
+        loadUsuarios();
+      }
+      else {
+        alert('Ocorreu um erro. Por favor, tente novamente!')
+      }
+
+    }
+  }
+
+  async function handleProximo() {
+    if (window.confirm("Deseja retirar o paciente da fila?")) {
+      var result = await api.put('patients/retirado/' + primeiro.id);
+      if (result.status == 200) {
+        history.push('/admin/pacientes')
+        setContador(0);
+        loadUsuarios();
       }
       else {
         alert('Ocorreu um erro. Por favor, tente novamente!')
@@ -144,7 +170,7 @@ export default function UsuariosListagem() {
                             <StyledTableCell align="center">Classificação</StyledTableCell>
                             <StyledTableCell align="center">Tempo de Espera</StyledTableCell>
                             <StyledTableCell align="center">Status</StyledTableCell>
-                            <StyledTableCell align="center">Opções</StyledTableCell>
+
 
                           </TableRow>
                         </TableHead>
@@ -159,32 +185,38 @@ export default function UsuariosListagem() {
                               <StyledTableCell align="center" >{row.color == "VERMELHO" ? <Chip
                                 label="VERMELHO"
                                 color="secondary"
-                              /> : <> <ThemeProvider theme={themeChip}>  {row.color == "LARANJA" ? <Chip
+                              /> : <> <ThemeProvider theme={themeChip}>{row.color == "LARANJA" ? <Chip
                                 label="LARANJA"
-
+                                color="primary"
+                              /> : <> {row.color == "AMARELO" ? <Chip
+                                label="AMARELO"
+                                color="secondary"
+                              /> : <> <ThemeProvider theme={themeChip2}>{row.color == "VERDE" ? <Chip
+                                label="VERDE"
                                 color="primary"
                               /> : <Chip
-                                  label="AMARELO"
-                                  color="secondary"
-                                />} </ThemeProvider></>}
+                                label="AZUL"
+                                color="secondary"
+                              />}</ThemeProvider></>} </>}</ThemeProvider></>}
                               </StyledTableCell>
                               <StyledTableCell align="center" >{dateFromNow(row.moment)}</StyledTableCell>
                               <StyledTableCell align="center" >{row.status}</StyledTableCell>
-                              <StyledTableCell align="center" >
-                                <ButtonGroup aria-label="outlined primary button group">
-                                  <Button color="primary" onClick={() => handleChamar(row.id)}>CHAMAR</Button>
-                                  <Button color="secondary" onClick={() => handleConfirmar(row.id)} disabled={row.status!=="CALLED"}>CONFIRMAR</Button>
-                                </ButtonGroup>
-                                {/* href={'/admin/pacientes/chamar/' + row.id} */ }
-                              </StyledTableCell>
+
                             </TableRow>
                           ))}
                         </TableBody>
                       </Table>
                     </TableContainer>
                   </Grid>
-
-
+                  <Grid item xs={4} sm={4} align="center" >
+                    <Button disabled={pacientes.length === 0} color="secondary" variant="contained" className={classes.formControlButton} onClick={() => handleChamar()}>CHAMAR PACIENTE</Button>
+                  </Grid>
+                  <Grid item xs={4} sm={4} align="center" >
+                    <Button disabled={pacientes.length === 0} color="secondary" variant="contained" className={classes.formControlButton} onClick={() => handleConfirmar()} disabled={contador == 0}>CONFIRMAR CHEGADA</Button>
+                  </Grid>
+                  <Grid item xs={4} sm={4} align="center" >
+                    <Button disabled={pacientes.length === 0} color="secondary" variant="contained" className={classes.formControlButton} onClick={() => handleProximo()} disabled={contador < 3}>PRÓXIMO PACIENTE</Button>
+                  </Grid>
                 </Grid>
               </Paper>
 

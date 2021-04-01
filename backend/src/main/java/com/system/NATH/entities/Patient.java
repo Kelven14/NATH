@@ -23,19 +23,19 @@ public class Patient implements Serializable {
 	private ListFlowchart flowchart;
 	private int pain;
 	private double pulse;
-	private int oximetry;
+	private double oximetry;
 	private Instant moment;
 	private Instant momentEnd; // CAPTURA TEMPO DE SAIDA
 	private ListColor color;
 	private ListStatus status;
-	
+	private double temperature;
 
 	public Patient() {
 
 	}
 
-	public Patient(Long id, String name,String password,ListFlowchart flowchart,int pain, double pulse, int oximetry, Instant moment, ListColor color,
-			ListStatus status,Instant momentEnd) {
+	public Patient(Long id, String name,String password,ListFlowchart flowchart,int pain, double pulse, double oximetry, Instant moment, ListColor color,
+			ListStatus status,Instant momentEnd,double temperature) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -48,6 +48,7 @@ public class Patient implements Serializable {
 		this.moment = moment;
 		this.color = color;
 		this.status = status;
+		this.temperature=temperature;
 	}
 
 	public Long getId() {
@@ -99,11 +100,11 @@ public class Patient implements Serializable {
 		this.pulse = pulse;
 	}
 
-	public int getOximetry() {
+	public double getOximetry() {
 		return oximetry;
 	}
 
-	public void setOximetry(int oximetry) {
+	public void setOximetry(double oximetry) {
 		this.oximetry = oximetry;
 	}
 
@@ -141,6 +142,15 @@ public class Patient implements Serializable {
 
 	public void setMomentEnd(Instant momentEnd) {
 		this.momentEnd = momentEnd;
+	}
+
+
+	public double getTemperature() {
+		return temperature;
+	}
+
+	public void setTemperature(double temperature) {
+		this.temperature = temperature;
 	}
 
 	@Override

@@ -2,5 +2,5 @@ package com.system.NATH.entities;
 
 public enum ListColor {
 
-	AMARELO,LARANJA,VERMELHO;
+	AZUL,VERDE,AMARELO,LARANJA,VERMELHO;
 }

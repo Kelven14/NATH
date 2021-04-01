@@ -58,31 +58,19 @@
     const [dor, setDor] = useState('');
     const [fluxograma, setFluxograma] = useState('');
     const [cor, setCor] = useState('');
+    const [temperatura, setTemperatura] = useState('');
     
-  
-    {/** const{ form,setForm}=useState(
-      {
-        nome:'',
-        email:'',
-        senha:'',
-        tipo:'',
-      }
-    ); */}
-  
-   
-  
      async function handleSubmit(){
-  
       const data={
         name:nome,
         password:senha,
-        oximetria:oximetria,
+        oximetry:oximetria,
         pulse:pulsação,
         pain:dor,
         flowchart:fluxograma,
-        color:cor
+        color:cor,
+        temperature:temperatura
       }
-     
      
       const response= await api.post('/patients',data)
 
@@ -107,7 +95,7 @@
                 <Paper className={classes.paper}>
                   <h2 align="center">Cadastro de Pacientes</h2>
                   <Grid container spacing={3}>
-                    <Grid item xs={12} sm={12}>
+                    <Grid item xs={12} sm={8}>
                       <TextField
                         required
                         id="nome"
@@ -132,6 +120,28 @@
                         onChange={e => setSenha(e.target.value)}
                         variant="outlined"
                         
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                      <TextField
+                      className={classes.formControl}
+                     required
+                     name="userTemperatura"
+                     autoFocus
+                     id="outlined-number"
+                     label="Temperatura"
+                     type="number"
+                     
+
+                     InputProps={{
+                         inputProps: {
+                             max: 100, min: 0
+                         }
+                     }}
+                     value={temperatura}
+                     onChange={e => setTemperatura(e.target.value)}
+                     variant="outlined"
+              
                       />
                     </Grid>
                     <Grid item xs={12} sm={4}>
@@ -195,26 +205,7 @@
                      variant="outlined"
                       />
                     </Grid>
-                    {/*
-                    <Grid item xs={12} sm={4}>
-                      <TextField
-                      className={classes.formControl}
-                      required
-                      name="userFluxograma"
-                      id="outlined-number"
-                      label="Fluxograma"
-                      type="number"
-                      
-                      InputProps={{
-                          inputProps: {
-                              max: 52, min: 0
-                          }
-                      }}
-                        value={fluxograma}
-                        onChange={e => setFluxograma(e.target.value)}
-                        variant="outlined"
-                      />
-                    </Grid>*/}
+                  
                       <Grid item xs={12} sm={4}>
                       <FormControl className={classes.formControl}
                            required
@@ -229,9 +220,9 @@
                           onChange={e => setFluxograma(e.target.value)}
                       
                         >
-                          <MenuItem value={0}>01 - Dor Abdominal</MenuItem>
-                          <MenuItem value={1}>09 - Dor Lombar/Costas</MenuItem>
-                          <MenuItem value={2}>26 - Sangramento Digestivo</MenuItem>
+                          <MenuItem value={0}>19 - Dor Abdominal</MenuItem>
+                          <MenuItem value={1}>25 - Dor Torácica</MenuItem>
+                          <MenuItem value={2}>40 - Problemas em extremidades</MenuItem>
                         </Select>
                       </FormControl>
                     </Grid>
@@ -249,9 +240,11 @@
                           onChange={e => setCor(e.target.value)}
                       
                         >
-                          <MenuItem value={0}>Amarelo</MenuItem>
-                          <MenuItem value={1}>Laranja</MenuItem>
-                          <MenuItem value={2}>Vermelho</MenuItem>
+                          <MenuItem value={0}>Azul</MenuItem>
+                          <MenuItem value={1}>Verde</MenuItem>
+                          <MenuItem value={2}>Amarelo</MenuItem>
+                          <MenuItem value={3}>Laranja</MenuItem>
+                          <MenuItem value={4}>Vermelho</MenuItem>
                         </Select>
                       </FormControl>
                     </Grid>

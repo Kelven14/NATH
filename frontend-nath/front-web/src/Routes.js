@@ -5,6 +5,7 @@ import { isAuthenticated } from './services/auth';
 // IMPORTS ADMIN
 import Dashboard from './pages/admin/dashboard';
 import Pacientes from './pages/admin/pacientes';
+import PacientesInfo from './pages/admin/pacientes/pacienteInfo';
 import PacientesAll from './pages/admin/pacientes/pacientes.all';
 import PacientesCadastrar from './pages/admin/pacientes/pacientes.cadastrar';
 import Usuarios from './pages/admin/usuarios';
@@ -12,6 +13,8 @@ import UsuarioCadastrar from './pages/admin/usuarios/usuarios.cadastrar';
 // IMPORTS CLIENT
 import Login from './pages/client/login';
 import PacientesSala from './pages/client/pacientes/pacientes.sala';
+
+
 
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -57,12 +60,15 @@ export default function Routes() {
                 <PrivateRoute path="/admin" exact component={Dashboard} />
                 
                 <PrivateRoute path="/admin/pacientes" exact component={Pacientes} />
+                <PrivateRoute path="/admin/paciente/info/:id" exact component={PacientesInfo} />
                 <PrivateRoute path="/admin/pacientes/all" exact component={PacientesAll} />
                 <PrivateRoute path="/admin/pacientes/cadastrar" exact component={PacientesCadastrar} />
                
                 <PrivateRoute path="/admin/usuarios" exact component={Usuarios} />
                 <PrivateRoute path="/admin/usuarios/cadastrar" exact component={UsuarioCadastrar} />
-                <PrivateRoute path="*"/>
+                <Route path="*">
+                    <h1>Not found 404</h1>
+                </Route>
                    
             </Switch>
         </BrowserRouter>

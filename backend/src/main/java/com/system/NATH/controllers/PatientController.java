@@ -40,6 +40,12 @@ public class PatientController {
 		return ResponseEntity.ok().body(dto);
 	}
 	
+	@PutMapping("status/waitingOne")
+	public ResponseEntity<PatientDTO> findWaitingOne() {
+		PatientDTO a = service.findByWaitingOne();
+		return ResponseEntity.ok().body(a);
+	}
+	
 	@GetMapping("status/waiting")
 	public ResponseEntity<List<PatientDTO>> findWaiting() {
 		List<PatientDTO> list = service.findByWaiting();
@@ -66,6 +72,12 @@ public class PatientController {
 		return ResponseEntity.created(uri).body(dto);
 	}
 
+	@PutMapping("/retirado/{id}")
+	public ResponseEntity<PatientDTO> setStatusRetirado(@PathVariable Long id) {
+		PatientDTO dto = service.setStatusRetirar(id);
+		return ResponseEntity.ok().body(dto);
+	}
+	
 	@PutMapping("/called/{id}")
 	public ResponseEntity<PatientDTO> setStatusCalled(@PathVariable Long id) {
 		PatientDTO dto = service.setStatusCalled(id);
@@ -75,6 +87,16 @@ public class PatientController {
 	@PutMapping("/attending/{id}")
 	public ResponseEntity<PatientDTO> setStatusAttending(@PathVariable Long id) {
 		PatientDTO dto = service.setStatusAttending(id);
+		return ResponseEntity.ok().body(dto);
+	}
+	@PutMapping("/medication/{id}")
+	public ResponseEntity<PatientDTO> setStatusMedication(@PathVariable Long id) {
+		PatientDTO dto = service.setStatusMedication(id);
+		return ResponseEntity.ok().body(dto);
+	}
+	@PutMapping("/finish/{id}")
+	public ResponseEntity<PatientDTO> setStatusFinish(@PathVariable Long id) {
+		PatientDTO dto = service.setStatusFinish(id);
 		return ResponseEntity.ok().body(dto);
 	}
 
