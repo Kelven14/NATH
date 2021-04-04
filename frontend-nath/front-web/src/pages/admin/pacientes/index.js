@@ -28,6 +28,7 @@ import 'dayjs/locale/pt-br';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useHistory } from "react-router-dom";
 
+
 dayjs.locale('pt-br');
 dayjs.extend(relativeTime);
 
@@ -65,6 +66,10 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'auto',
     flexDirection: 'column',
   },
+  formControlButton: {
+    width: '30%',
+    marginTop: 0,
+  },
 
 }));
 
@@ -77,32 +82,34 @@ export default function UsuariosListagem() {
   const history = useHistory();
   const classes = useStyles();
   const [pacientes, setPacientes] = useState([])
-  const primeiro=pacientes[0]
-  const [contador, setContador] = useState(0)
+  const [primeiroPaciente,setPrimeiroPaciente]= useState([])
+  
 
   useEffect(() => {
     async function loadUsuarios() {
       const response = await api.get('patients/status/waiting');
       setPacientes(response.data)
     }
-    loadUsuarios();
 
+    loadUsuarios(); 
   }, [])
 
   async function loadUsuarios() {
     const response = await api.get('patients/status/waiting');
     setPacientes(response.data)
   }
+  
 
   async function handleChamar() {
+    const response = await api.get('patients/status/waitingOne');
+    console.log(response.data)
     if (window.confirm("Deseja chamar o paciente?")) {
-
-      var result = await api.get('patients/status/waitingOne');
-      console.log(result)
-      if (result.status == 200) {
-    
-        history.push('/admin/pacientes')
-        loadUsuarios();
+  
+      var result = await api.put('patients/called/' +  response.data.id);
+      if (result.status === 200) {
+        
+        history.push('/admin/paciente/info/'+  response.data.id);
+        loadUsuarios();     
       }
       else {
         alert('Ocorreu um erro. Por favor, tente novamente!')
@@ -110,37 +117,6 @@ export default function UsuariosListagem() {
 
     }
   }
-
-  async function handleConfirmar() {
-    if (window.confirm("Paciente chegou na sala?")) {
-      var result = await api.put('patients/attending/' + primeiro.id);
-      if (result.status == 200) {
-        history.push('/admin/paciente/info/'+primeiro.id)
-        setContador(0);
-        loadUsuarios();
-      }
-      else {
-        alert('Ocorreu um erro. Por favor, tente novamente!')
-      }
-
-    }
-  }
-
-  async function handleProximo() {
-    if (window.confirm("Deseja retirar o paciente da fila?")) {
-      var result = await api.put('patients/retirado/' + primeiro.id);
-      if (result.status == 200) {
-        history.push('/admin/pacientes')
-        setContador(0);
-        loadUsuarios();
-      }
-      else {
-        alert('Ocorreu um erro. Por favor, tente novamente!')
-      }
-
-    }
-  }
-
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -170,8 +146,6 @@ export default function UsuariosListagem() {
                             <StyledTableCell align="center">Classificação</StyledTableCell>
                             <StyledTableCell align="center">Tempo de Espera</StyledTableCell>
                             <StyledTableCell align="center">Status</StyledTableCell>
-
-
                           </TableRow>
                         </TableHead>
                         <TableBody>
@@ -182,16 +156,16 @@ export default function UsuariosListagem() {
                               </StyledTableCell  >
                               <StyledTableCell align="center" >{row.password}</StyledTableCell>
 
-                              <StyledTableCell align="center" >{row.color == "VERMELHO" ? <Chip
+                              <StyledTableCell align="center" >{row.color === "VERMELHO" ? <Chip
                                 label="VERMELHO"
                                 color="secondary"
-                              /> : <> <ThemeProvider theme={themeChip}>{row.color == "LARANJA" ? <Chip
+                              /> : <> <ThemeProvider theme={themeChip}>{row.color === "LARANJA" ? <Chip
                                 label="LARANJA"
                                 color="primary"
-                              /> : <> {row.color == "AMARELO" ? <Chip
+                              /> : <> {row.color === "AMARELO" ? <Chip
                                 label="AMARELO"
                                 color="secondary"
-                              /> : <> <ThemeProvider theme={themeChip2}>{row.color == "VERDE" ? <Chip
+                              /> : <> <ThemeProvider theme={themeChip2}>{row.color === "VERDE" ? <Chip
                                 label="VERDE"
                                 color="primary"
                               /> : <Chip
@@ -201,21 +175,14 @@ export default function UsuariosListagem() {
                               </StyledTableCell>
                               <StyledTableCell align="center" >{dateFromNow(row.moment)}</StyledTableCell>
                               <StyledTableCell align="center" >{row.status}</StyledTableCell>
-
                             </TableRow>
                           ))}
                         </TableBody>
                       </Table>
                     </TableContainer>
                   </Grid>
-                  <Grid item xs={4} sm={4} align="center" >
+                  <Grid item xs={12} sm={12} align="center" >
                     <Button disabled={pacientes.length === 0} color="secondary" variant="contained" className={classes.formControlButton} onClick={() => handleChamar()}>CHAMAR PACIENTE</Button>
-                  </Grid>
-                  <Grid item xs={4} sm={4} align="center" >
-                    <Button disabled={pacientes.length === 0} color="secondary" variant="contained" className={classes.formControlButton} onClick={() => handleConfirmar()} disabled={contador == 0}>CONFIRMAR CHEGADA</Button>
-                  </Grid>
-                  <Grid item xs={4} sm={4} align="center" >
-                    <Button disabled={pacientes.length === 0} color="secondary" variant="contained" className={classes.formControlButton} onClick={() => handleProximo()} disabled={contador < 3}>PRÓXIMO PACIENTE</Button>
                   </Grid>
                 </Grid>
               </Paper>

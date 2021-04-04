@@ -40,10 +40,10 @@ public class PatientController {
 		return ResponseEntity.ok().body(dto);
 	}
 	
-	@PutMapping("status/waitingOne")
+	@GetMapping("status/waitingOne")
 	public ResponseEntity<PatientDTO> findWaitingOne() {
-		PatientDTO a = service.findByWaitingOne();
-		return ResponseEntity.ok().body(a);
+		PatientDTO dto = service.findByWaitingOne();
+		return ResponseEntity.ok().body(dto);
 	}
 	
 	@GetMapping("status/waiting")

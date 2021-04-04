@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-import { isAuthenticated } from './services/auth';
+import { isAdministrador, isAuthenticated, isEnfermeiroAdm, isMedicoAdm,  } from './services/auth';
 
 // IMPORTS ADMIN
 import Dashboard from './pages/admin/dashboard';
@@ -47,7 +47,47 @@ const GuestRoute = ({ component: Component, ...rest }) => (
 );
 
 
+const AdminRoute = ({ component: Component, ...rest }) => (
 
+    <Route
+        {...rest}
+        render={props =>
+             isAdministrador () ? (
+                <Component {...props} />
+            ) : (
+                    <Redirect to={{ pathname: "/", state: { from: props.location } }} />
+                )
+        }
+    />
+);
+
+const EnfermeiroRoute = ({ component: Component, ...rest }) => (
+
+    <Route
+        {...rest}
+        render={props =>
+            isEnfermeiroAdm()? (
+                <Component {...props} />
+            ) : (
+                    <Redirect to={{ pathname: "/", state: { from: props.location } }} />
+                )
+        }
+    />
+);
+
+const MedicoRoute = ({ component: Component, ...rest }) => (
+
+    <Route
+        {...rest}
+        render={props =>
+            isMedicoAdm()? (
+                <Component {...props} />
+            ) : (
+                    <Redirect to={{ pathname: "/", state: { from: props.location } }} />
+                )
+        }
+    />
+);
 
 export default function Routes() {
     return (
@@ -59,17 +99,16 @@ export default function Routes() {
                 {/* Rota Admin */}
                 <PrivateRoute path="/admin" exact component={Dashboard} />
                 
-                <PrivateRoute path="/admin/pacientes" exact component={Pacientes} />
-                <PrivateRoute path="/admin/paciente/info/:id" exact component={PacientesInfo} />
+                <MedicoRoute  path="/admin/pacientes" exact component={Pacientes} />
+                <MedicoRoute  path="/admin/paciente/info/:id" exact component={PacientesInfo} />
                 <PrivateRoute path="/admin/pacientes/all" exact component={PacientesAll} />
-                <PrivateRoute path="/admin/pacientes/cadastrar" exact component={PacientesCadastrar} />
+                <EnfermeiroRoute path="/admin/pacientes/cadastrar" exact component={PacientesCadastrar} />
                
-                <PrivateRoute path="/admin/usuarios" exact component={Usuarios} />
-                <PrivateRoute path="/admin/usuarios/cadastrar" exact component={UsuarioCadastrar} />
+                <AdminRoute path="/admin/usuarios" exact component={Usuarios} />
+                <AdminRoute path="/admin/usuarios/cadastrar" exact component={UsuarioCadastrar} />
                 <Route path="*">
                     <h1>Not found 404</h1>
                 </Route>
-                   
             </Switch>
         </BrowserRouter>
     )

@@ -7,6 +7,7 @@ import com.system.NATH.entities.ListColor;
 import com.system.NATH.entities.ListFlowchart;
 import com.system.NATH.entities.ListStatus;
 import com.system.NATH.entities.Patient;
+import com.system.NATH.entities.Usuario;
 
 public class PatientDTO implements Serializable {
 
@@ -24,13 +25,14 @@ public class PatientDTO implements Serializable {
 	private ListColor color;
 	private ListStatus status;
 	private double temperature;
+	private Usuario usuario;
 
 	public PatientDTO() {
 
 	}
 
 	public PatientDTO(Long id, String name,String password,ListFlowchart flowchart, int pain, double pulse, double oximetry, Instant moment, ListColor color,
-			ListStatus status,Instant momentEnd,double temperature) {
+			ListStatus status,Instant momentEnd,double temperature, Usuario usuario) {
 		this.id = id;
 		this.name = name;
 		this.password=password;
@@ -43,6 +45,7 @@ public class PatientDTO implements Serializable {
 		this.color = color;
 		this.status = status;
 		this.temperature=temperature;
+		this.usuario=usuario;
 	}
 
 	public PatientDTO(Patient entity) {
@@ -51,13 +54,14 @@ public class PatientDTO implements Serializable {
 		password=entity.getPassword();
 		flowchart=entity.getFlowchart();
 		pain = entity.getPain();
-		pulse = entity.getPulse();
+		pulse = entity.getPulse();	
 		oximetry = entity.getOximetry();
 		moment = entity.getMoment();
 		momentEnd=entity.getMomentEnd();
 		color = entity.getColor();
 		status = entity.getStatus();
 		temperature=entity.getTemperature();
+		usuario=entity.getUsuario();
 	}
 
 	public Long getId() {
@@ -140,10 +144,6 @@ public class PatientDTO implements Serializable {
 		this.status = status;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 	public Instant getMomentEnd() {
 		return momentEnd;
 	}
@@ -159,6 +159,17 @@ public class PatientDTO implements Serializable {
 	public void setTemperature(double temperature) {
 		this.temperature = temperature;
 	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 	
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	
 }

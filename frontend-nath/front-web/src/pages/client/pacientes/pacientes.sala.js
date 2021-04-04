@@ -105,9 +105,11 @@ export default function PacientesCadastrar() {
     async function loadUsuarios2() {
       const response = await api.get('/patients/status/attending');
       setPacientesAtend(response.data)
+      console.log(response.data)
     }
     loadUsuarios();
     loadUsuarios2();
+    
   }, [])
 
   return (
@@ -139,7 +141,7 @@ export default function PacientesCadastrar() {
                     </Typography>
                     {pacientes.map((tier) => (
                       <Typography align="center" component="h1" variant="h2" style={{ color: '#3f51b5' }}>
-                        {tier.senha === null ? " " : "1"}
+                        {tier.usuario.sala}
 
                       </Typography>
                     ))}

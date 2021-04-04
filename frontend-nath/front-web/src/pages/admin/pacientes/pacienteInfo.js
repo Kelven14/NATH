@@ -4,7 +4,6 @@ import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import MenuAdmin from '../../../components/menu-admin'
 import Footer from '../../../components/footer-admin'
 import TextField from '@material-ui/core/TextField';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -55,57 +54,96 @@ export default function PacientesCadastrar() {
     const [pacientes, setPacientes] = useState([])
     const { id } = useParams();
     const history = useHistory();
+    const [confirmar, setConfirmar] = useState(0)
+    const [contador, setContador] = useState(1)
    
+
     useEffect(() => {
         async function loadUsuarios() {
             const response = await api.get('patients/' + id);
             setPacientes(response.data)
-            console.log(response.data)
         }
         loadUsuarios();
     }, [])
 
+  
     async function handleMedicacao() {
         if (window.confirm("Confirmar a ida do paciente a medicação?")) {
-    
-          var result = await api.put('patients/medication/' + id);
-          if (result.status == 200) {
-       
-    
-            history.push('/admin/pacientes')
-            
-          }
-          else {
-            alert('Ocorreu um erro. Por favor, tente novamente!')
-          }
-    
+            var result = await api.put('patients/medication/' + id);
+            if (result.status === 200) {
+                history.push('/admin/pacientes')
+            }
+            else {
+                alert('Ocorreu um erro. Por favor, tente novamente!')
+            }
+
         }
-      }
-      async function handleFinalizar() {
+    }
+    async function handleFinalizar() {
         if (window.confirm("Finalizar o atendimento?")) {
-    
-          var result = await api.put('patients/finish/' + id);
-          if (result.status == 200) {
-       
-    
-            history.push('/admin/pacientes')
-            
-          }
-          else {
-            alert('Ocorreu um erro. Por favor, tente novamente!')
-          }
-    
+
+            var result = await api.put('patients/finish/' + id);
+            if (result.status === 200) {
+                history.push('/admin/pacientes')
+            }
+            else {
+                alert('Ocorreu um erro. Por favor, tente novamente!')
+            }
+
         }
-      }
+    }
 
+    async function handleConfirmar() {
+        if (window.confirm("Paciente chegou na sala?")) {
+            var result = await api.put('patients/attending/' + id);
+            if (result.status === 200) {
+                setConfirmar(1);
+                setContador(0);
+            }
+            else {
+                alert('Ocorreu um erro. Por favor, tente novamente!')
+            }
 
+        }
+    }
+
+    async function handleProximo() {
+        if (window.confirm("Tem certeza que o Paciente não compareceu?")) {
+            var result = await api.put('patients/retirado/' + id);
+            if (result.status === 200) {
+                history.push('/admin/pacientes')
+               
+            }
+            else {
+                alert('Ocorreu um erro. Por favor, tente novamente!')
+            }
+
+        }
+    }
+
+    async function handleChamar() {
+        if (window.confirm("Deseja chamar novamente o paciente?")) {
+
+            var result = await api.put('patients/called/' + id);
+            if (result.status === 200) {
+                setContador(contador + 1)
+            }
+            else {
+                alert('Ocorreu um erro. Por favor, tente novamente!')
+            }
+
+        }
+    }
+
+    
+   
     return (
         <div className={classes.root}>
             <CssBaseline />
 
             <AppBar position="absolute" className={clsx(classes.appBar && classes.appBarShift)}>
                 <Toolbar className={classes.toolbar}>
-                  
+
                 </Toolbar>
             </AppBar>
             {/* <MenuAdmin title={'Pacientes'} /> */}
@@ -189,7 +227,6 @@ export default function PacientesCadastrar() {
                                             name="userPulsação"
                                             autoFocus
                                             id="pulsação"
-                                            name="pulsação"
                                             label="pulsação"
                                             type="number"
                                             value={pacientes.pulse}
@@ -239,7 +276,6 @@ export default function PacientesCadastrar() {
                                             name="cor"
                                             label="cor"
                                             variant="outlined"
-                                            id="cor"
                                             value={pacientes.color}
                                             InputLabelProps={{
                                                 shrink: true,
@@ -248,17 +284,27 @@ export default function PacientesCadastrar() {
 
                                     </Grid>
 
-                                    {/* <Grid align="center" item xs={12} sm={6}>
-                                        <Button className={classes.formControlButton} onClick={() => handleMedicacao()} variant="contained" color="secondary">
+                                    <Grid item xs={4} sm={4} align="center" >
+                                        <Button disabled={pacientes.length === 0 || confirmar===1} color="secondary" variant="contained" className={classes.formControlButton} onClick={() => handleChamar()}>CHAMAR PACIENTE</Button>
+                                    </Grid>
+
+                                    <Grid item xs={4} sm={4} align="center" >
+                                        <Button disabled={pacientes.length === 0 || confirmar===1} color="primary" variant="contained" className={classes.formControlButton} onClick={() => handleConfirmar()} > CHEGOU</Button>
+                                    </Grid>
+                                    <Grid item xs={4} sm={4} align="center" >
+                                        <Button  color="secondary" variant="contained" className={classes.formControlButton} onClick={() => handleProximo()} disabled={contador < 3}> NÃO CHEGOU</Button>
+                                    </Grid>
+                                   
+                                    <Grid align="center" item xs={12} sm={6}>
+                                        <Button className={classes.formControlButton} onClick={() => handleMedicacao()} disabled={confirmar === 0} variant="contained" color="secondary">
                                             Medicação
                                         </Button>
 
-                                    </Grid> */}
-                                    <Grid align="center" item xs={12} sm={12}>
-                                        <Button className={classes.formControlButton} onClick={() => handleFinalizar()} variant="contained" color="primary">
+                                    </Grid>
+                                    <Grid align="center" item xs={12} sm={6}>
+                                        <Button className={classes.formControlButton} onClick={() => handleFinalizar()} disabled={confirmar === 0} variant="contained" color="primary">
                                             Finalizar atendimento
                                         </Button>
-
                                     </Grid>
                                 </Grid>
                             </Paper>

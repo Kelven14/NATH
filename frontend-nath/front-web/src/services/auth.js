@@ -18,3 +18,43 @@ export const getTipoUsuario = () => localStorage.getItem(USER_TYPE);
 export const getToken = () => localStorage.getItem(TOKEN_KEY)
 
 export const isAuthenticated=()=>!!localStorage.getItem('&app-token')
+
+export const isAdministrador=()=>{
+    let ok=false;
+    if(localStorage.getItem('&user-type')==="Administrador"){
+        ok=true;
+    }
+    return ok;
+}
+
+export const isMedico=()=>{
+    let ok=false;
+    if(localStorage.getItem('&user-type')==="Médico"){
+        ok=true;
+    }
+    return ok;
+}
+
+export const isEnfermeiro=()=>{
+    let ok=false;
+    if(localStorage.getItem('&user-type')==="Enfermeiro"){
+        ok=true;
+    }
+    return ok;
+}
+
+export const isEnfermeiroAdm=()=>{
+    let ok=false;
+    if(localStorage.getItem('&user-type')==="Enfermeiro"||localStorage.getItem('&user-type')==="Administrador"){
+        ok=true;
+    }
+    return ok;
+}
+
+export const isMedicoAdm=()=>{
+    let ok=false;
+    if(localStorage.getItem('&user-type')==="Médico"||localStorage.getItem('&user-type')==="Administrador"){
+        ok=true;
+    }
+    return ok;
+}

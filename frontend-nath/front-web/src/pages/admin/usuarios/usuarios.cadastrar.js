@@ -67,7 +67,7 @@ export default function UsuarioCadastrar() {
       sala:sala
     }
     const response= await api.post('/usuarios/cadastrar',data)
-    if (response.status == 200) {
+    if (response.status === 200) {
       window.location.href = '/admin/usuarios';
     }
     else {

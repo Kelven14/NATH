@@ -1,5 +1,5 @@
 import api from "../services/api";
-import { login, setNomeUsuario } from "./auth";
+import {  login, setIdUsuario, setNomeUsuario,setTipoUsuario } from "./auth";
 
 
 
@@ -18,6 +18,9 @@ class AuthService {
                         resolve(response.data.user);
                         login(response.data.token);
                         setNomeUsuario(response.data.nome);
+                        setTipoUsuario(response.data.tipo);
+                        setIdUsuario(response.data.id);
+                      
                     }
                     else {
                         reject(response.data.error);

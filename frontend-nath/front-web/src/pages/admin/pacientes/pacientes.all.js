@@ -13,7 +13,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Chip from '@material-ui/core/Chip';
 import { ThemeProvider } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import api from '../../../services/api';
 import themeChip from '../../../theme/chip';
 import themeChip2 from '../../../theme/chip2';
@@ -21,6 +20,9 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/pt-br';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import MenuAdmin from '../../../components/menu-admin';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import Button from '@material-ui/core/Button';
+import { useHistory } from "react-router-dom";
 
 dayjs.locale('pt-br');
 dayjs.extend(relativeTime);
@@ -74,7 +76,7 @@ function dateFromNow(date) {
 
 export default function UsuariosListagem() {
   const classes = useStyles();
-
+  const history = useHistory();
   const [pacientes, setPacientes] = useState([])
 
   useEffect(() => {
@@ -85,12 +87,20 @@ export default function UsuariosListagem() {
     loadUsuarios();
   }, [])
 
+  async function loadUsuarios() {
+    const response = await api.get('patients');
+    setPacientes(response.data)
+        
+  }
 
-  async function handleDelete() {
-    if (window.confirm("Deseja Exluir essa lista de pacientes?")) {
-      var result = await api.delete('patients/delete/All/finishDay');
-      if (result.status == 200) {
-        window.location.href = '/admin/pacientes/all';
+
+  async function handleChamar(id) {
+    if (window.confirm("Deseja chamar o paciente?")) {
+
+      var result = await api.put('patients/called/' + id);
+      if (result.status === 200) {
+    
+        history.push('/admin/paciente/info/'+ id)
       }
       else {
         alert('Ocorreu um erro. Por favor, tente novamente!')
@@ -98,6 +108,33 @@ export default function UsuariosListagem() {
 
     }
   }
+
+  async function handleFinalizar(id) {
+    if (window.confirm("Finalizar o atendimento?")) {
+
+      var result = await api.put('patients/finish/' + id);
+      if (result.status === 200) {
+        history.push('/admin/pacientes/all')
+        loadUsuarios();
+      }
+      else {
+        alert('Ocorreu um erro. Por favor, tente novamente!')
+      }
+
+    }
+  }
+  // async function handleDelete() {
+  //   if (window.confirm("Deseja Exluir essa lista de pacientes?")) {
+  //     var result = await api.delete('patients/delete/All/finishDay');
+  //     if (result.status === 200) {
+  //       window.location.href = '/admin/pacientes/all';
+  //     }
+  //     else {
+  //       alert('Ocorreu um erro. Por favor, tente novamente!')
+  //     }
+
+  //   }
+  // }
 
   return (
     <div className={classes.root}>
@@ -120,6 +157,7 @@ export default function UsuariosListagem() {
                             <StyledTableCell align="center">Classificação</StyledTableCell>
                             <StyledTableCell align="center">Tempo de Espera</StyledTableCell>
                             <StyledTableCell align="center">Status</StyledTableCell>
+                            <StyledTableCell align="center">Opções</StyledTableCell>
                           </TableRow>
                         </TableHead>
                         <TableBody>
@@ -130,16 +168,16 @@ export default function UsuariosListagem() {
                               </StyledTableCell  >
                               <StyledTableCell align="center" >{row.password}</StyledTableCell>
 
-                              <StyledTableCell align="center" >{row.color == "VERMELHO" ? <Chip
+                              <StyledTableCell align="center" >{row.color === "VERMELHO" ? <Chip
                                 label="VERMELHO"
                                 color="secondary"
-                              /> : <> <ThemeProvider theme={themeChip}>{row.color == "LARANJA" ? <Chip
+                              /> : <> <ThemeProvider theme={themeChip}>{row.color === "LARANJA" ? <Chip
                                 label="LARANJA"
                                 color="primary"
-                              /> : <> {row.color == "AMARELO" ? <Chip
+                              /> : <> {row.color === "AMARELO" ? <Chip
                                 label="AMARELO"
                                 color="secondary"
-                              /> : <> <ThemeProvider theme={themeChip2}>{row.color == "VERDE" ? <Chip
+                              /> : <> <ThemeProvider theme={themeChip2}>{row.color === "VERDE" ? <Chip
                                 label="VERDE"
                                 color="primary"
                               /> : <Chip
@@ -149,7 +187,12 @@ export default function UsuariosListagem() {
                               </StyledTableCell>
                               <StyledTableCell align="center" >{dateFromNow(row.moment)}</StyledTableCell>
                               <StyledTableCell align="center" >{row.status}</StyledTableCell>
-
+                              <StyledTableCell align="center" >
+                                <ButtonGroup aria-label="outlined primary button group">
+                                  <Button color="primary" disabled={row.status !== "RETIRADO"} onClick={() => handleChamar(row.id)}>CHAMAR</Button>
+                                  <Button color="secondary" disabled={row.status !== "MEDICAÇÃO" } onClick={() => handleFinalizar(row.id)}>FINALIZAR</Button>
+                                </ButtonGroup>
+                              </StyledTableCell>
                             </TableRow>
                           ))}
                         </TableBody>

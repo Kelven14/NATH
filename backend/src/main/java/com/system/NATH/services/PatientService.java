@@ -29,7 +29,10 @@ public class PatientService {
 	public PatientDTO findByWaitingOne() {
 		List<Patient> list = repository.findOrderWithPatient();
 		List<PatientDTO> a=list.stream().map(x -> new PatientDTO(x)).collect(Collectors.toList()).subList(0, 1);
-		return setStatusCalled(a.get(0).getId());
+	Patient patient=repository.getOne(a.get(0).getId());
+
+	return new PatientDTO(patient);
+		
 	}
 	
 	@Transactional(readOnly = true)
@@ -41,16 +44,21 @@ public class PatientService {
 	@Transactional(readOnly = true)
 	public List<PatientDTO> findByCalled() {
 		List<Patient> list = repository.findOrderWithPatientCalled();
-		return list.stream().map(x -> new PatientDTO(x)).collect(Collectors.toList());
+		return list.stream().map(x -> new PatientDTO(x)).collect(Collectors.toList()).subList(0, 1);
 	}
 	
 	@Transactional(readOnly = true)
 	public List<PatientDTO> findByAttending() {
 		List<Patient> list = repository.findOrderWithPatientAttending();
-		return list.stream().map(x -> new PatientDTO(x)).collect(Collectors.toList());
+		List<PatientDTO> a=list.stream().map(x -> new PatientDTO(x)).collect(Collectors.toList());
+		if(a.size()>4) {
+		return a.subList(0, 4);	
+		}
+		
+		return a;
 	}
 	@Transactional
-	public  PatientDTO getById(Long id) {
+	public PatientDTO getById(Long id) {
 		Patient patient=repository.getOne(id);
 		return new PatientDTO(patient);
 	}
@@ -58,7 +66,7 @@ public class PatientService {
 	@Transactional
 	public PatientDTO insert(PatientDTO dto) {
 		Patient patient = new Patient(null, dto.getName(),dto.getPassword(),dto.getFlowchart(), dto.getPain(), dto.getPulse(), dto.getOximetry(),
-				Instant.now(), dto.getColor(), ListStatus.AGUARDANDO,null,dto.getTemperature());
+				Instant.now(), dto.getColor(), ListStatus.AGUARDANDO,null,dto.getTemperature(),dto.getUsuario());
 
 		patient = repository.save(patient);
 		return new PatientDTO(patient);
@@ -103,7 +111,6 @@ public class PatientService {
 		return new PatientDTO(patient);
 	}
 
-	
 	
 	@Transactional	
 	public void deleteById(Long id) {

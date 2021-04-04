@@ -11,31 +11,34 @@ import ExitToApp from '@material-ui/icons/ExitToApp';
 import Help from '@material-ui/icons/Help';
 import AccountBox from '@material-ui/icons/AccountBox';
 import FeaturedPlayList from '@material-ui/icons/FeaturedPlayList';
-import { logout } from '../services/auth';
+import { isAdministrador, isEnfermeiro, isEnfermeiroAdm, isMedico, isMedicoAdm, logout } from '../services/auth';
+
+
+
+
 
 export const mainListItems = (
   <div>
 
-    <ListItem button component="a"  href="/admin">
+    <ListItem button component="a" href="/admin">
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
       <ListItemText primary="Dashboard" />
     </ListItem>
-    <ListItem button component="a"  href="/admin/pacientes/cadastrar">
+    { isEnfermeiroAdm() && <ListItem button component="a" href="/admin/pacientes/cadastrar">
       <ListItemIcon>
         <GroupAdd />
       </ListItemIcon>
       <ListItemText primary="Adicionar Pacientes" />
-    </ListItem>
-    <ListItem button component="a"  href="/admin/pacientes">
+    </ListItem>}
+    { isMedicoAdm() &&<ListItem button component="a" href="/admin/pacientes">
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
       <ListItemText primary="Consultar Pacientes" />
-    </ListItem>
-  
-    <ListItem button component="a"  href="/admin/pacientes/all">
+    </ListItem>}
+    <ListItem button component="a" href="/admin/pacientes/all">
       <ListItemIcon>
         <FeaturedPlayList />
       </ListItemIcon>
@@ -47,24 +50,24 @@ export const mainListItems = (
 export const secondaryListItems = (
   <div>
     <ListSubheader inset>Opções</ListSubheader>
-    <ListItem button  component="a"  href="/admin/usuarios/cadastrar">
+    {isAdministrador() && <ListItem button component="a" href="/admin/usuarios/cadastrar">
       <ListItemIcon>
         <AccountCircle />
       </ListItemIcon>
       <ListItemText primary="Adicionar Usuários" />
-    </ListItem>
-    <ListItem button  component="a"  href="/admin/usuarios">
+    </ListItem>}
+    {isAdministrador() && <ListItem button component="a" href="/admin/usuarios">
       <ListItemIcon>
         <AccountBox />
       </ListItemIcon>
       <ListItemText primary="Consultar Usuários" />
-    </ListItem>
+    </ListItem>}
     <ListItem button>
       <ListItemIcon>
         <Help />
       </ListItemIcon>
       <ListItemText primary="Ajuda" />
-    </ListItem> 
+    </ListItem>
     <ListItem button onClick={confirmSair}>
       <ListItemIcon>
         <ExitToApp />
@@ -74,9 +77,9 @@ export const secondaryListItems = (
   </div>
 );
 
- function confirmSair(){
-  if(window.confirm("Deseja realmente sair do sistema?")){
+function confirmSair() {
+  if (window.confirm("Deseja realmente sair do sistema?")) {
     logout();
-    window.location.href='/'
+    window.location.href = '/'
   }
 }

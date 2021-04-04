@@ -66,11 +66,6 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-function dateFromNow(date) {
-  return dayjs(date).fromNow();
-}
-
-
 export default function UsuariosListagem() {
   const classes = useStyles();
 

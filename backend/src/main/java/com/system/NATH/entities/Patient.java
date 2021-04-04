@@ -8,6 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.persistence.ManyToOne;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "tb_patient")
@@ -18,24 +21,41 @@ public class Patient implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@NotNull
 	private String name;
+	@NotNull
 	private String password;
+	@NotNull
 	private ListFlowchart flowchart;
+	@NotNull
 	private int pain;
+	@NotNull
 	private double pulse;
+	@NotNull
 	private double oximetry;
+	@NotNull
 	private Instant moment;
+	
 	private Instant momentEnd; // CAPTURA TEMPO DE SAIDA
+	@NotNull
 	private ListColor color;
+	@NotNull
 	private ListStatus status;
+	@NotNull
 	private double temperature;
-
+	
+	@ManyToOne
+	@JsonIgnoreProperties("patient")
+	
+	private Usuario usuario;
+	
 	public Patient() {
-
+ 
 	}
 
 	public Patient(Long id, String name,String password,ListFlowchart flowchart,int pain, double pulse, double oximetry, Instant moment, ListColor color,
-			ListStatus status,Instant momentEnd,double temperature) {
+			ListStatus status,Instant momentEnd,double temperature,Usuario usuario) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -49,6 +69,7 @@ public class Patient implements Serializable {
 		this.color = color;
 		this.status = status;
 		this.temperature=temperature;
+		this.usuario=usuario;
 	}
 
 	public Long getId() {
@@ -67,7 +88,6 @@ public class Patient implements Serializable {
 		this.name = name;
 	}
 	
-
 	public String getPassword() {
 		return password;
 	}
@@ -132,9 +152,7 @@ public class Patient implements Serializable {
 		this.status = status;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+
 
 	public Instant getMomentEnd() {
 		return momentEnd;
@@ -151,6 +169,15 @@ public class Patient implements Serializable {
 
 	public void setTemperature(double temperature) {
 		this.temperature = temperature;
+	}
+	
+	
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	@Override
@@ -176,6 +203,10 @@ public class Patient implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }
