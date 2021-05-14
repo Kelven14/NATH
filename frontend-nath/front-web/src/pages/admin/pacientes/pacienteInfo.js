@@ -14,6 +14,7 @@ import api from '../../../services/api'
 import { useParams } from "react-router-dom";
 import AppBar from '@material-ui/core/AppBar';
 import { useHistory } from "react-router-dom";
+import { setVariavel } from '../../../services/auth';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -97,6 +98,7 @@ export default function PacientesCadastrar() {
         if (window.confirm("Paciente chegou na sala?")) {
             var result = await api.put('patients/attending/' + id);
             if (result.status === 200) {
+                setVariavel('true')
                 setConfirmar(1);
                 setContador(0);
             }
@@ -112,7 +114,7 @@ export default function PacientesCadastrar() {
             var result = await api.put('patients/retirado/' + id);
             if (result.status === 200) {
                 history.push('/admin/pacientes')
-               
+                setVariavel('true');
             }
             else {
                 alert('Ocorreu um erro. Por favor, tente novamente!')
@@ -123,9 +125,10 @@ export default function PacientesCadastrar() {
 
     async function handleChamar() {
         if (window.confirm("Deseja chamar novamente o paciente?")) {
-
+           
             var result = await api.put('patients/called/' + id);
             if (result.status === 200) {
+                setVariavel(true)
                 setContador(contador + 1)
             }
             else {

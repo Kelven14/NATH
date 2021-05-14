@@ -72,6 +72,14 @@ public class PatientController {
 		return ResponseEntity.created(uri).body(dto);
 	}
 
+
+	@PutMapping
+	public ResponseEntity<PatientDTO> Put(@RequestBody PatientDTO patient) {
+		PatientDTO dto = service.put(patient);	
+		return ResponseEntity.ok().body(dto);
+//		return ResponseEntity.status(HttpStatus.OK).body(repository.save(produto));
+	}
+	
 	@PutMapping("/retirado/{id}")
 	public ResponseEntity<PatientDTO> setStatusRetirado(@PathVariable Long id) {
 		PatientDTO dto = service.setStatusRetirar(id);

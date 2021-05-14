@@ -23,6 +23,8 @@ import MenuAdmin from '../../../components/menu-admin';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
 import { useHistory } from "react-router-dom";
+import { setVariavel } from '../../../services/auth';
+import { TramRounded } from '@material-ui/icons';
 
 dayjs.locale('pt-br');
 dayjs.extend(relativeTime);
@@ -96,10 +98,9 @@ export default function UsuariosListagem() {
 
   async function handleChamar(id) {
     if (window.confirm("Deseja chamar o paciente?")) {
-
       var result = await api.put('patients/called/' + id);
       if (result.status === 200) {
-    
+        setVariavel(true)
         history.push('/admin/paciente/info/'+ id)
       }
       else {
@@ -196,9 +197,7 @@ export default function UsuariosListagem() {
                             </TableRow>
                           ))}
                         </TableBody>
-
                       </Table>
-
                     </TableContainer>
                     {/* <Grid item xs={12} sm={12} align="center" >
                       <Button disabled={pacientes.length === 0} color="secondary" variant="contained" className={classes.formControlButton} onClick={handleDelete}>EXCLUIR LISTA </Button>

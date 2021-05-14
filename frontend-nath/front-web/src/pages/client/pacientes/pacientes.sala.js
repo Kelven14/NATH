@@ -18,9 +18,13 @@ import CardContent from '@material-ui/core/CardContent';
 import dayjs from 'dayjs';
 import 'dayjs/locale/pt-br';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { isReload, setVariavel } from '../../../services/auth';
+import Song from '../../../asssets/audio/chamada.mp3'
 
 dayjs.locale('pt-br');
 dayjs.extend(relativeTime);
+
+
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -44,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    height: '100vh',
+    // height: '100vh',
     backgroundColor: '#eeeeee'
 
   },
@@ -78,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   cardCima: {
-    height: '200px',
+    height: '165px',
     width: '50%',
     border: '1'
   },
@@ -97,24 +101,39 @@ export default function PacientesCadastrar() {
   const [pacientes, setPacientes] = useState([])
   const [pacientesAtend, setPacientesAtend] = useState([])
 
+  setInterval(function () {
+    isReload()
+    setVariavel(false)
+  }, 1000);
+
+
   useEffect(() => {
+    let audio = new Audio(Song)
+    function start() {
+      audio.play()
+    }
+
     async function loadUsuarios() {
       const response = await api.get('/patients/status/called');
       setPacientes(response.data)
+      if (response.data !== 0) {
+        start();
+      }
     }
     async function loadUsuarios2() {
       const response = await api.get('/patients/status/attending');
       setPacientesAtend(response.data)
-      console.log(response.data)
     }
+
     loadUsuarios();
     loadUsuarios2();
-    
+
+
   }, [])
 
   return (
-    <div className={classes.root}>
-      <main className={classes.content}>
+    <div className={classes.root} >
+      <main className={classes.content} >
         <Container maxWidth="lg" className={classes.container} >
           <Grid container spacing={3} style={{ align: "center" }} >
             <Grid item xs={12} sm={12}  >
@@ -142,7 +161,6 @@ export default function PacientesCadastrar() {
                     {pacientes.map((tier) => (
                       <Typography align="center" component="h1" variant="h2" style={{ color: '#3f51b5' }}>
                         {tier.usuario.sala}
-
                       </Typography>
                     ))}
                   </Grid>
@@ -152,7 +170,7 @@ export default function PacientesCadastrar() {
             <Grid item sm={12} marginTop="0">
               <Card className={classes.cardBaixo}>
                 <CardContent>
-                  <Typography align="center" component="h1" variant="h4" style={{ color: '#3f51b5' }}>
+                  <Typography align="center" component="h1" variant="h" style={{ color: '#3f51b5' }}>
                     Histórico de chamadas
                     </Typography>
                   <h2 align="center"> </h2>
@@ -191,11 +209,9 @@ export default function PacientesCadastrar() {
               </Card>
             </Grid>
           </Grid>
-          <Box pt={2}>
-            <Footer />
-          </Box>
+          <Footer />
         </Container>
       </main>
     </div>
   );
-} 
+}

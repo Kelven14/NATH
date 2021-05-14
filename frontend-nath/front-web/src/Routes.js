@@ -98,7 +98,6 @@ export default function Routes() {
                 <Route path="/pacientes/sala" exact component={PacientesSala} />
                 {/* Rota Admin */}
                 <PrivateRoute path="/admin" exact component={Dashboard} />
-                
                 <MedicoRoute  path="/admin/pacientes" exact component={Pacientes} />
                 <MedicoRoute  path="/admin/paciente/info/:id" exact component={PacientesInfo} />
                 <PrivateRoute path="/admin/pacientes/all" exact component={PacientesAll} />

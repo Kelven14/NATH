@@ -17,4 +17,5 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
 	@Query("SELECT obj FROM Patient obj  WHERE obj.status>=2 ORDER BY obj.momentEnd DESC")
 	List<Patient> findOrderWithPatientAttending();
 	
+	
 }

@@ -73,6 +73,14 @@ public class PatientService {
 	}
 	
 	@Transactional
+	public PatientDTO put(PatientDTO dto) {
+		Patient patient=repository.getOne(dto.getId());
+		patient.setUsuario(dto.getUsuario());
+		patient = repository.save(patient);
+		return new PatientDTO(patient);
+	}
+	
+	@Transactional
 	public PatientDTO setStatusAttending(Long id) {
 		Patient patient=repository.getOne(id);
 		patient.setStatus(ListStatus.CONSULTÓRIO);
@@ -95,6 +103,8 @@ public class PatientService {
 		patient = repository.save(patient);
 		return new PatientDTO(patient);
 	}
+	
+	
 	@Transactional
 	public PatientDTO setStatusMedication(Long id) {
 		Patient patient=repository.getOne(id);

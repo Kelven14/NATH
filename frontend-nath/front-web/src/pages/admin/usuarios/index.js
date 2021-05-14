@@ -95,7 +95,6 @@ export default function UsuariosListagem() {
   return (
     <div className={classes.root}>
       <CssBaseline />
-
       <MenuAdmin title={'Usuários'} />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
@@ -149,8 +148,6 @@ export default function UsuariosListagem() {
                       </Table>
                     </TableContainer>
                   </Grid>
-
-
                 </Grid>
               </Paper>
 

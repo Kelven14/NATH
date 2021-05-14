@@ -24,7 +24,7 @@ export const mainListItems = (
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
-      <ListItemText primary="Dashboard" />
+      <ListItemText primary="Início" />
     </ListItem>
     { isEnfermeiroAdm() && <ListItem button component="a" href="/admin/pacientes/cadastrar">
       <ListItemIcon>
@@ -62,12 +62,12 @@ export const secondaryListItems = (
       </ListItemIcon>
       <ListItemText primary="Consultar Usuários" />
     </ListItem>}
-    <ListItem button>
+    {/* <ListItem button>
       <ListItemIcon>
         <Help />
       </ListItemIcon>
       <ListItemText primary="Ajuda" />
-    </ListItem>
+    </ListItem> */}
     <ListItem button onClick={confirmSair}>
       <ListItemIcon>
         <ExitToApp />

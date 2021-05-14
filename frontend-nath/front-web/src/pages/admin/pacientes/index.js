@@ -27,6 +27,7 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/pt-br';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useHistory } from "react-router-dom";
+import { getIdUsuario, setVariavel } from '../../../services/auth';
 
 
 dayjs.locale('pt-br');
@@ -57,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'auto',
   },
   container: {
+
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
   },
@@ -83,15 +85,23 @@ export default function UsuariosListagem() {
   const classes = useStyles();
   const [pacientes, setPacientes] = useState([])
   const [primeiroPaciente,setPrimeiroPaciente]= useState([])
-  
+  const [usuario, setUsuario] = useState([]);
+  const idUsuario = getIdUsuario();
 
   useEffect(() => {
     async function loadUsuarios() {
       const response = await api.get('patients/status/waiting');
       setPacientes(response.data)
+  
     }
-
+    async function loadUsuario() {
+      const response = await api.get('usuarios/' + idUsuario);
+      setUsuario(response.data)    
+    }
+    
+    loadUsuario();
     loadUsuarios(); 
+  
   }, [])
 
   async function loadUsuarios() {
@@ -99,15 +109,34 @@ export default function UsuariosListagem() {
     setPacientes(response.data)
   }
   
+ 
 
   async function handleChamar() {
     const response = await api.get('patients/status/waitingOne');
-    console.log(response.data)
     if (window.confirm("Deseja chamar o paciente?")) {
   
       var result = await api.put('patients/called/' +  response.data.id);
+
+      
       if (result.status === 200) {
-        
+        const data = {
+          id:result.data.id,
+          name: result.data.name,
+          moment:result.data.moment,
+          password: result.data.password,
+          oximetry: result.data.oximetry,
+          pulse: result.data.pulse,
+          pain: result.data.pain,
+          flowchart: result.data.flowchart,
+          status:result.data.status,
+          color: result.data.color,
+          temperature: result.data.temperature,
+          momentEnd:result.data.momentEnd,
+          usuario: usuario
+        }
+        console.log(data)
+        const response = await api.put('patients', data)
+        setVariavel(true)
         history.push('/admin/paciente/info/'+  response.data.id);
         loadUsuarios();     
       }

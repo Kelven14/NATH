@@ -61,18 +61,17 @@ export default function PacientesCadastrar() {
   const [fluxograma, setFluxograma] = useState('');
   const [cor, setCor] = useState('');
   const [temperatura, setTemperatura] = useState('');
-  const [usuario, setUsuario] = useState([]);
-  const idUsuario = getIdUsuario()
+  // const [usuario, setUsuario] = useState([]);
+  // const idUsuario = getIdUsuario()
   const history = useHistory();
  
-  useEffect(() => {
-    async function loadUsuario() {
-      const response = await api.get('usuarios/' + idUsuario);
-      setUsuario(response.data)
-    }
-
-    loadUsuario();
-  }, [])
+  // useEffect(() => {
+  //   async function loadUsuario() {
+  //     const response = await api.get('usuarios/' + idUsuario);
+  //     setUsuario(response.data)
+  //   }
+  //   loadUsuario();
+  // }, [])
 
   async function handleSubmit() {
     const data = {
@@ -83,8 +82,7 @@ export default function PacientesCadastrar() {
       pain: dor,
       flowchart: fluxograma,
       color: cor,
-      temperature: temperatura,
-      usuario: usuario
+      temperature: temperatura
     }
 
     const response = await api.post('/patients', data)
@@ -100,8 +98,6 @@ export default function PacientesCadastrar() {
       setFluxograma(" ")
       setCor(" ")
       setTemperatura(" ")
-
-
     }
     else {
       alert('Ocorreu um erro. Por favor, tente novamente!')
@@ -199,7 +195,7 @@ export default function PacientesCadastrar() {
                       type="number"
                       InputProps={{
                         inputProps: {
-                          max: 300, min: 0
+                          max: 200, min: 0
                         }
                       }}
                       value={pulsação}
@@ -243,8 +239,8 @@ export default function PacientesCadastrar() {
 
                       >
                         <MenuItem value={0}>19 - Dor Abdominal</MenuItem>
-                        <MenuItem value={1}>25 - Dor Torácica</MenuItem>
-                        <MenuItem value={2}>40 - Problemas em extremidades</MenuItem>
+                        <MenuItem value={1}>23 - Dor Lombar</MenuItem>
+                        <MenuItem value={2}>25 - Dor Torácica</MenuItem>
                       </Select>
                     </FormControl>
                   </Grid>

@@ -71,7 +71,6 @@ export default function SignInSide() {
 
   }
 
-
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />

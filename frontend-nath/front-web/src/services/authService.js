@@ -1,11 +1,8 @@
 import api from "../services/api";
-import {  login, setIdUsuario, setNomeUsuario,setTipoUsuario } from "./auth";
-
-
+import {  login, setIdUsuario, setNomeUsuario,setTipoUsuario, setVariavel } from "./auth";
 
 class AuthService {
     signIn = (email, password) => {
-
 
         return new Promise((resolve, reject) => {
             const data = {
@@ -20,7 +17,7 @@ class AuthService {
                         setNomeUsuario(response.data.nome);
                         setTipoUsuario(response.data.tipo);
                         setIdUsuario(response.data.id);
-                      
+                        setVariavel(false);
                     }
                     else {
                         reject(response.data.error);
