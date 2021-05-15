@@ -24,113 +24,114 @@ public class PatientService {
 		List<Patient> list = repository.findAll();
 		return list.stream().map(x -> new PatientDTO(x)).collect(Collectors.toList());
 	}
-	
+
 	@Transactional(readOnly = true)
 	public PatientDTO findByWaitingOne() {
 		List<Patient> list = repository.findOrderWithPatient();
-		List<PatientDTO> a=list.stream().map(x -> new PatientDTO(x)).collect(Collectors.toList()).subList(0, 1);
-	Patient patient=repository.getOne(a.get(0).getId());
+		List<PatientDTO> a = list.stream().map(x -> new PatientDTO(x)).collect(Collectors.toList()).subList(0, 1);
+		Patient patient = repository.getOne(a.get(0).getId());
 
-	return new PatientDTO(patient);
-		
+		return new PatientDTO(patient);
+
 	}
-	
+
 	@Transactional(readOnly = true)
 	public List<PatientDTO> findByWaiting() {
 		List<Patient> list = repository.findOrderWithPatient();
 		return list.stream().map(x -> new PatientDTO(x)).collect(Collectors.toList());
 	}
-	
+
 	@Transactional(readOnly = true)
 	public List<PatientDTO> findByCalled() {
 		List<Patient> list = repository.findOrderWithPatientCalled();
 		return list.stream().map(x -> new PatientDTO(x)).collect(Collectors.toList()).subList(0, 1);
 	}
-	
+
 	@Transactional(readOnly = true)
 	public List<PatientDTO> findByAttending() {
 		List<Patient> list = repository.findOrderWithPatientAttending();
-		List<PatientDTO> a=list.stream().map(x -> new PatientDTO(x)).collect(Collectors.toList());
-		if(a.size()>4) {
-		return a.subList(0, 4);	
+		List<PatientDTO> a = list.stream().map(x -> new PatientDTO(x)).collect(Collectors.toList());
+		if (a.size() > 4) {
+			return a.subList(0, 4);
 		}
-		
+
 		return a;
 	}
+
 	@Transactional
 	public PatientDTO getById(Long id) {
-		Patient patient=repository.getOne(id);
+		Patient patient = repository.getOne(id);
 		return new PatientDTO(patient);
 	}
 
 	@Transactional
 	public PatientDTO insert(PatientDTO dto) {
-		Patient patient = new Patient(null, dto.getName(),dto.getPassword(),dto.getFlowchart(), dto.getPain(), dto.getPulse(), dto.getOximetry(),
-				Instant.now(), dto.getColor(), ListStatus.AGUARDANDO,null,dto.getTemperature(),dto.getUsuario());
+		Patient patient = new Patient(null, dto.getName(), dto.getPassword(), dto.getFlowchart(), dto.getPain(),
+				dto.getPulse(), dto.getOximetry(), Instant.now(), dto.getColor(), ListStatus.AGUARDANDO, null,
+				dto.getTemperature(), dto.getUsuario());
 
 		patient = repository.save(patient);
 		return new PatientDTO(patient);
 	}
-	
+
 	@Transactional
 	public PatientDTO put(PatientDTO dto) {
-		Patient patient=repository.getOne(dto.getId());
+		Patient patient = repository.getOne(dto.getId());
 		patient.setUsuario(dto.getUsuario());
 		patient = repository.save(patient);
 		return new PatientDTO(patient);
 	}
-	
+
 	@Transactional
 	public PatientDTO setStatusAttending(Long id) {
-		Patient patient=repository.getOne(id);
+		Patient patient = repository.getOne(id);
 		patient.setStatus(ListStatus.CONSULTÓRIO);
 		patient.setMomentEnd(Instant.now());
 		patient = repository.save(patient);
 		return new PatientDTO(patient);
 	}
+
 	@Transactional
 	public PatientDTO setStatusRetirar(Long id) {
-		Patient patient=repository.getOne(id);
+		Patient patient = repository.getOne(id);
 		patient.setStatus(ListStatus.RETIRADO);
 		patient.setMomentEnd(Instant.now());
 		patient = repository.save(patient);
 		return new PatientDTO(patient);
 	}
+
 	@Transactional
 	public PatientDTO setStatusCalled(Long id) {
-		Patient patient=repository.getOne(id);
+		Patient patient = repository.getOne(id);
 		patient.setStatus(ListStatus.CHAMADO);
 		patient = repository.save(patient);
 		return new PatientDTO(patient);
 	}
-	
-	
+
 	@Transactional
 	public PatientDTO setStatusMedication(Long id) {
-		Patient patient=repository.getOne(id);
+		Patient patient = repository.getOne(id);
 		patient.setStatus(ListStatus.MEDICAÇÃO);
 		patient = repository.save(patient);
 		return new PatientDTO(patient);
 	}
-	
+
 	@Transactional
 	public PatientDTO setStatusFinish(Long id) {
-		Patient patient=repository.getOne(id);
+		Patient patient = repository.getOne(id);
 		patient.setStatus(ListStatus.ATENDIDO);
 		patient = repository.save(patient);
 		return new PatientDTO(patient);
 	}
 
-	
-	@Transactional	
+	@Transactional
 	public void deleteById(Long id) {
 		repository.deleteById(id);
 	}
-	
-	
-	@Transactional	
+
+	@Transactional
 	public void deleteAll() {
 		repository.deleteAll();
 	}
-	
+
 }

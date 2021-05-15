@@ -24,8 +24,6 @@ import Song from '../../../asssets/audio/chamada.mp3'
 dayjs.locale('pt-br');
 dayjs.extend(relativeTime);
 
-
-
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: "#3f51b5",

@@ -21,7 +21,7 @@ public class Patient implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@NotNull
 	private String name;
 	@NotNull
@@ -36,7 +36,7 @@ public class Patient implements Serializable {
 	private double oximetry;
 	@NotNull
 	private Instant moment;
-	
+
 	private Instant momentEnd; // CAPTURA TEMPO DE SAIDA
 	@NotNull
 	private ListColor color;
@@ -44,32 +44,33 @@ public class Patient implements Serializable {
 	private ListStatus status;
 	@NotNull
 	private double temperature;
-	
+
 	@ManyToOne
 	@JsonIgnoreProperties("patient")
-	
+
 	private Usuario usuario;
-	
+
 	public Patient() {
- 
+
 	}
 
-	public Patient(Long id, String name,String password,ListFlowchart flowchart,int pain, double pulse, double oximetry, Instant moment, ListColor color,
-			ListStatus status,Instant momentEnd,double temperature,Usuario usuario) {
+	public Patient(Long id, String name, String password, ListFlowchart flowchart, int pain, double pulse,
+			double oximetry, Instant moment, ListColor color, ListStatus status, Instant momentEnd, double temperature,
+			Usuario usuario) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.password=password;
-		this.flowchart=flowchart;
+		this.password = password;
+		this.flowchart = flowchart;
 		this.pain = pain;
 		this.pulse = pulse;
 		this.oximetry = oximetry;
-		this.momentEnd= momentEnd;
+		this.momentEnd = momentEnd;
 		this.moment = moment;
 		this.color = color;
 		this.status = status;
-		this.temperature=temperature;
-		this.usuario=usuario;
+		this.temperature = temperature;
+		this.usuario = usuario;
 	}
 
 	public Long getId() {
@@ -87,7 +88,7 @@ public class Patient implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public String getPassword() {
 		return password;
 	}
@@ -152,8 +153,6 @@ public class Patient implements Serializable {
 		this.status = status;
 	}
 
-
-
 	public Instant getMomentEnd() {
 		return momentEnd;
 	}
@@ -162,7 +161,6 @@ public class Patient implements Serializable {
 		this.momentEnd = momentEnd;
 	}
 
-
 	public double getTemperature() {
 		return temperature;
 	}
@@ -170,8 +168,7 @@ public class Patient implements Serializable {
 	public void setTemperature(double temperature) {
 		this.temperature = temperature;
 	}
-	
-	
+
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -204,7 +201,7 @@ public class Patient implements Serializable {
 			return false;
 		return true;
 	}
-	
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}

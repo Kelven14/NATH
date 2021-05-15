@@ -33,25 +33,25 @@ public class PatientController {
 		List<PatientDTO> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
-	
+
 	@GetMapping("/{id}")
 	public ResponseEntity<PatientDTO> getById(@PathVariable long id) {
 		PatientDTO dto = service.getById(id);
 		return ResponseEntity.ok().body(dto);
 	}
-	
+
 	@GetMapping("status/waitingOne")
 	public ResponseEntity<PatientDTO> findWaitingOne() {
 		PatientDTO dto = service.findByWaitingOne();
 		return ResponseEntity.ok().body(dto);
 	}
-	
+
 	@GetMapping("status/waiting")
 	public ResponseEntity<List<PatientDTO>> findWaiting() {
 		List<PatientDTO> list = service.findByWaiting();
 		return ResponseEntity.ok().body(list);
 	}
-	
+
 	@GetMapping("status/called")
 	public ResponseEntity<List<PatientDTO>> findCalled() {
 		List<PatientDTO> list = service.findByCalled();
@@ -64,7 +64,6 @@ public class PatientController {
 		return ResponseEntity.ok().body(list);
 	}
 
-
 	@PostMapping
 	public ResponseEntity<PatientDTO> insert(@RequestBody PatientDTO dto) {
 		dto = service.insert(dto);
@@ -72,20 +71,19 @@ public class PatientController {
 		return ResponseEntity.created(uri).body(dto);
 	}
 
-
 	@PutMapping
 	public ResponseEntity<PatientDTO> Put(@RequestBody PatientDTO patient) {
-		PatientDTO dto = service.put(patient);	
+		PatientDTO dto = service.put(patient);
 		return ResponseEntity.ok().body(dto);
 //		return ResponseEntity.status(HttpStatus.OK).body(repository.save(produto));
 	}
-	
+
 	@PutMapping("/retirado/{id}")
 	public ResponseEntity<PatientDTO> setStatusRetirado(@PathVariable Long id) {
 		PatientDTO dto = service.setStatusRetirar(id);
 		return ResponseEntity.ok().body(dto);
 	}
-	
+
 	@PutMapping("/called/{id}")
 	public ResponseEntity<PatientDTO> setStatusCalled(@PathVariable Long id) {
 		PatientDTO dto = service.setStatusCalled(id);
@@ -97,11 +95,13 @@ public class PatientController {
 		PatientDTO dto = service.setStatusAttending(id);
 		return ResponseEntity.ok().body(dto);
 	}
+
 	@PutMapping("/medication/{id}")
 	public ResponseEntity<PatientDTO> setStatusMedication(@PathVariable Long id) {
 		PatientDTO dto = service.setStatusMedication(id);
 		return ResponseEntity.ok().body(dto);
 	}
+
 	@PutMapping("/finish/{id}")
 	public ResponseEntity<PatientDTO> setStatusFinish(@PathVariable Long id) {
 		PatientDTO dto = service.setStatusFinish(id);
@@ -117,7 +117,7 @@ public class PatientController {
 		} catch (Exception e) {
 
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}	
+		}
 
 	}
 

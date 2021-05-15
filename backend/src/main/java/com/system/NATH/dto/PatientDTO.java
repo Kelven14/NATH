@@ -31,37 +31,38 @@ public class PatientDTO implements Serializable {
 
 	}
 
-	public PatientDTO(Long id, String name,String password,ListFlowchart flowchart, int pain, double pulse, double oximetry, Instant moment, ListColor color,
-			ListStatus status,Instant momentEnd,double temperature, Usuario usuario) {
+	public PatientDTO(Long id, String name, String password, ListFlowchart flowchart, int pain, double pulse,
+			double oximetry, Instant moment, ListColor color, ListStatus status, Instant momentEnd, double temperature,
+			Usuario usuario) {
 		this.id = id;
 		this.name = name;
-		this.password=password;
-		this.flowchart=flowchart;
+		this.password = password;
+		this.flowchart = flowchart;
 		this.pain = pain;
 		this.pulse = pulse;
 		this.oximetry = oximetry;
 		this.moment = moment;
-		this.momentEnd=momentEnd;
+		this.momentEnd = momentEnd;
 		this.color = color;
 		this.status = status;
-		this.temperature=temperature;
-		this.usuario=usuario;
+		this.temperature = temperature;
+		this.usuario = usuario;
 	}
 
 	public PatientDTO(Patient entity) {
 		id = entity.getId();
 		name = entity.getName();
-		password=entity.getPassword();
-		flowchart=entity.getFlowchart();
+		password = entity.getPassword();
+		flowchart = entity.getFlowchart();
 		pain = entity.getPain();
-		pulse = entity.getPulse();	
+		pulse = entity.getPulse();
 		oximetry = entity.getOximetry();
 		moment = entity.getMoment();
-		momentEnd=entity.getMomentEnd();
+		momentEnd = entity.getMomentEnd();
 		color = entity.getColor();
 		status = entity.getStatus();
-		temperature=entity.getTemperature();
-		usuario=entity.getUsuario();
+		temperature = entity.getTemperature();
+		usuario = entity.getUsuario();
 	}
 
 	public Long getId() {
@@ -87,12 +88,12 @@ public class PatientDTO implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	public  ListFlowchart getFlowchart() {
+
+	public ListFlowchart getFlowchart() {
 		return flowchart;
 	}
 
-	public void setFlowchart( ListFlowchart flowchart) {
+	public void setFlowchart(ListFlowchart flowchart) {
 		this.flowchart = flowchart;
 	}
 
@@ -167,9 +168,9 @@ public class PatientDTO implements Serializable {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
 }

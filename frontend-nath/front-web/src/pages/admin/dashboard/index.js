@@ -64,118 +64,20 @@ export default function Dashboard() {
 
   const classes1 = useStyles1();
   const classes = useStyles();
-  const [pacientes, setPacientes] = useState([])
-
-  var qtdLaranja = 0;
-  var qtdAmarelo = 0;
-  var qtdVerde = 0;
-  var qtdAzul = 0;
-  var qtdTotal = 0;
+  const [info, setInfo] = useState([])
 
   useEffect(() => {
     async function loadUsuarios() {
-      let  response;
-      try{
-        response = await api.get('patients');
-        await setPacientes(response.data)
-      }catch(e) {
-        response = await api.get('patients');
-        await setPacientes(response.data)
-      }
-  
-      for (var i = 0; i < pacientes.length; i++) {
-        if (pacientes[i].color === "VERMELHO") {
-          qtdVermelho++;
-          qtdTotal++;
-          console.log(qtdVermelho);
-          console.log('vermelho');
-        }
-        else if (pacientes[i].color === "LARANJA") {
-          qtdLaranja++;
-          qtdTotal++;
-        }
-        else if (pacientes[i].color === "AMARELO") {
-          qtdAmarelo++;
-          qtdTotal++;
-        }
-        else if (pacientes[i].color === "VERDE") {
-          qtdVerde++;
-          qtdTotal++;
-        }
-        else if (pacientes[i].color === "AZUL") {
-          qtdAzul++;
-          qtdTotal++;
-        }
-      }
+      
+      const  response = await api.get('information');
+      await setInfo(response.data[0])
+      console.log(info.quantidadeAmarelo)
     }
     loadUsuarios();
-    console.log(pacientes)
-    console.log(qtdVermelho)
+    
   }, [])
 
-  async function loadUsuarios() {
-    let  response;
-    try{
-      response = await api.get('patients');
-      await setPacientes(response.data)
-    }catch(e) {
-      response = await api.get('patients');
-      await setPacientes(response.data)
-    }
-
-    for (var i = 0; i < pacientes.length; i++) {
-      if (pacientes[i].color === "VERMELHO") {
-        qtdVermelho++;
-        qtdTotal++;
-        console.log(qtdVermelho);
-        console.log('vermelho');
-      }
-      else if (pacientes[i].color === "LARANJA") {
-        qtdLaranja++;
-        qtdTotal++;
-      }
-      else if (pacientes[i].color === "AMARELO") {
-        qtdAmarelo++;
-        qtdTotal++;
-      }
-      else if (pacientes[i].color === "VERDE") {
-        qtdVerde++;
-        qtdTotal++;
-      }
-      else if (pacientes[i].color === "AZUL") {
-        qtdAzul++;
-        qtdTotal++;
-      }
-    }
-  }
-
-  async function loadInfo() {
-    for (var i = 0; i < pacientes.length; i++) {
-      if (pacientes[i].color === "VERMELHO") {
-        qtdVermelho++;
-        qtdTotal++;
-        console.log(qtdVermelho);
-        console.log('vermelho');
-      }
-      else if (pacientes[i].color === "LARANJA") {
-        qtdLaranja++;
-        qtdTotal++;
-      }
-      else if (pacientes[i].color === "AMARELO") {
-        qtdAmarelo++;
-        qtdTotal++;
-      }
-      else if (pacientes[i].color === "VERDE") {
-        qtdVerde++;
-        qtdTotal++;
-      }
-      else if (pacientes[i].color === "AZUL") {
-        qtdAzul++;
-        qtdTotal++;
-      }
-    }
-  }
-
+ 
 
   return (
    
@@ -196,7 +98,7 @@ export default function Dashboard() {
                 <CardFooter stats>
                   <div className={classes.stats}>
                     <CheckCircleOutlineIcon />
-                     Pacientes atendidos:
+                     Pacientes atendidos: {info.quantidadeTotal}
                    </div>
                 </CardFooter>
               </Card>
@@ -209,14 +111,13 @@ export default function Dashboard() {
                   </CardIcon>
                   <p className={classes.cardCategory}>Quantidade </p>
                   <h3 className={classes.cardTitle} >
-                  {qtdVermelho}
-                  
+                  {info.quantidadeVermelho}
                   </h3>
                 </CardHeader>
                 <CardFooter stats>
                   <div className={classes.stats}>
                     <Update />
-                     Tempo médio de espera: 0 min
+                     Tempo médio de espera: {info.tempoVermelho}
                    </div>
                 </CardFooter>
               </Card>
@@ -229,7 +130,7 @@ export default function Dashboard() {
                   </CardIcon>
                   <p className={classes.cardCategory}>Quantidade </p>
                   <h3 className={classes.cardTitle}>
-
+                  {info.quantidadeLaranja}
                   </h3>
 
                 </CardHeader>
@@ -250,7 +151,7 @@ export default function Dashboard() {
                   </CardIcon>
                   <p className={classes.cardCategory}>Quantidade </p>
                   <h3 className={classes.cardTitle}>
-
+                  {info.quantidadeAmarelo}
                   </h3>
 
                 </CardHeader>
@@ -271,7 +172,7 @@ export default function Dashboard() {
                   </CardIcon>
                   <p className={classes.cardCategory}>Quantidade </p>
                   <h3 className={classes.cardTitle}>
-
+                  {info.quantidadeVerde}
                   </h3>
 
                 </CardHeader>
@@ -291,7 +192,7 @@ export default function Dashboard() {
                   </CardIcon>
                   <p className={classes.cardCategory}>Quantidade </p>
                   <h3 className={classes.cardTitle}>
-
+                  {info.quantidadeAzul}
                   </h3>
 
                 </CardHeader>
