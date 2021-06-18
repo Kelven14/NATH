@@ -191,7 +191,7 @@ export default function PacientesCadastrar() {
                                 <StyledTableCell align="center" component="th" scope="row">
                                   {row.name}
                                 </StyledTableCell  >
-                                <StyledTableCell align="center"  >{1}</StyledTableCell>
+                                <StyledTableCell align="center"  >{row.usuario.sala}</StyledTableCell>
 
                                 <StyledTableCell align="center" >{dateFromNow(row.momentEnd)}</StyledTableCell>
                               </TableRow>

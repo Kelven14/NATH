@@ -42,7 +42,7 @@ public class InformationService {
 					double tempoFila_ajustado = Math.round(tempoFila * 100) / 100.0;
 					tempoVermelho = (tempoVermelho + tempoFila_ajustado) / (double) qtdVermelho;
 				}
-			} else if (list.get(i).getColor() == ListColor.LARANJA) {
+			} if (list.get(i).getColor() == ListColor.LARANJA) {
 				qtdLaranja++;
 				if (list.get(i).getMomentEnd() != null || information.getTempoLaranja() != 0) {
 					double init = list.get(i).getMoment().getEpochSecond();
@@ -51,7 +51,7 @@ public class InformationService {
 					double tempoFila_ajustado = Math.round(tempoFila * 100) / 100.0;
 					tempoLaranja = (tempoLaranja + tempoFila_ajustado) / (double) qtdLaranja;
 				}
-			} else if (list.get(i).getColor() == ListColor.AMARELO) {
+			}  if (list.get(i).getColor() == ListColor.AMARELO) {
 				qtdAmarelo++;
 				if (list.get(i).getMomentEnd() != null || information.getTempoAmarelo() != 0) {
 					double init = list.get(i).getMoment().getEpochSecond();
@@ -60,7 +60,7 @@ public class InformationService {
 					double tempoFila_ajustado = Math.round(tempoFila * 100) / 100.0;
 					tempoAmarelo = (tempoAmarelo + tempoFila_ajustado) / (double) qtdAmarelo;
 				}
-			} else if (list.get(i).getColor() == ListColor.VERDE) {
+			}  if (list.get(i).getColor() == ListColor.VERDE) {
 				qtdVerde++;
 				if (list.get(i).getMomentEnd() != null || information.getTempoVerde() != 0) {
 					double init = list.get(i).getMoment().getEpochSecond();
@@ -69,13 +69,13 @@ public class InformationService {
 					double tempoFila_ajustado = Math.round(tempoFila * 100) / 100.0;
 					tempoVerde = (tempoVerde + tempoFila_ajustado) / (double) qtdVerde;
 				}
-			} else if (list.get(i).getColor() == ListColor.AZUL) {
+			}  if (list.get(i).getColor() == ListColor.AZUL) {
 				qtdAzul++;
 				if (list.get(i).getMomentEnd() != null || information.getTempoAzul() != 0) {
 					double init = list.get(i).getMoment().getEpochSecond();
 					double end = list.get(i).getMomentEnd().getEpochSecond();
 					double tempoFila = (end - init) / 60;
-					double tempoFila_ajustado = Math.round(tempoFila * 100) / 100.0;
+					double tempoFila_ajustado = (Math.round(tempoFila * 100) / 100.0);
 					tempoAzul = (tempoAzul + tempoFila_ajustado) / (double) qtdAzul;
 				}
 			}
@@ -84,6 +84,11 @@ public class InformationService {
 		qtdTotal = list.size();
 		information.setQuantidadeTotal(qtdTotal);
 		information.setTempoVermelho(tempoVermelho);
+		information.setTempoLaranja(tempoLaranja);
+		information.setTempoAmarelo(tempoAmarelo);
+		information.setTempoVerde(tempoVerde);
+		information.setTempoAzul(tempoAzul);
+		
 		information.setQuantidadeVermelho(qtdVermelho);
 		information.setQuantidadeLaranja(qtdLaranja);
 		information.setQuantidadeAmarelo(qtdAmarelo);

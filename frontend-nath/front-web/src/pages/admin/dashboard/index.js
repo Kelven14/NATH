@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from "@material-ui/core/styles";
 
 import Update from "@material-ui/icons/Update";
-
+import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import Accessibility from "@material-ui/icons/Accessibility";
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 
@@ -59,6 +59,14 @@ const useStyles1 = makeStyles((theme) => ({
 
 let qtdVermelho = 0
 
+export const numberFormat = (value) =>
+new    Intl.NumberFormat('pt-BR', {
+  style: 'decimal',
+    minimumFractionDigits: 2
+}).format(value);
+
+
+
 export default function Dashboard() {
 
 
@@ -71,11 +79,12 @@ export default function Dashboard() {
       
       const  response = await api.get('information');
       await setInfo(response.data[0])
-      console.log(info.quantidadeAmarelo)
     }
     loadUsuarios();
     
   }, [])
+
+
 
  
 
@@ -91,7 +100,7 @@ export default function Dashboard() {
             <GridItem xs={12} sm={6} md={9}>
               <Card>
                 <CardHeader color="rose">
-                  <h2 className={classes.cardTitleWhite}>Estátisticas de atendimento</h2>
+                  <h2 className={classes.cardTitleWhite}>Estatísticas de atendimento</h2>
                   <p className={classes.cardCategoryWhite}>
                   </p>
                 </CardHeader>
@@ -109,15 +118,15 @@ export default function Dashboard() {
                   <CardIcon color="danger">
                     <Accessibility />
                   </CardIcon>
-                  <p className={classes.cardCategory}>Quantidade </p>
+                  <p className={classes.cardCategory}>Tempo médio de espera </p>
                   <h3 className={classes.cardTitle} >
-                  {info.quantidadeVermelho}
+                  {numberFormat(info.tempoVermelho) } min
                   </h3>
                 </CardHeader>
                 <CardFooter stats>
                   <div className={classes.stats}>
-                    <Update />
-                     Tempo médio de espera: {info.tempoVermelho}
+                    <AssignmentIndIcon/>
+                    Quantidade:{info.quantidadeVermelho}
                    </div>
                 </CardFooter>
               </Card>
@@ -128,16 +137,15 @@ export default function Dashboard() {
                   <CardIcon color="warning">
                     <Accessibility />
                   </CardIcon>
-                  <p className={classes.cardCategory}>Quantidade </p>
+                  <p className={classes.cardCategory}>Tempo médio de espera </p>
                   <h3 className={classes.cardTitle}>
-                  {info.quantidadeLaranja}
+                  {numberFormat(info.tempoLaranja)} min
                   </h3>
-
                 </CardHeader>
                 <CardFooter stats>
                   <div className={classes.stats}>
-                    <Update />
-                     Tempo médio de espera: 12 min
+                    <AssignmentIndIcon />
+                    Quantidade:{info.quantidadeLaranja}
                    </div>
                 </CardFooter>
               </Card>
@@ -149,16 +157,17 @@ export default function Dashboard() {
                   <CardIcon color="primary">
                     <Accessibility />
                   </CardIcon>
-                  <p className={classes.cardCategory}>Quantidade </p>
+                  <p className={classes.cardCategory}>Tempo médio de espera </p>
                   <h3 className={classes.cardTitle}>
-                  {info.quantidadeAmarelo}
+                  {numberFormat(info.tempoAmarelo)} min
+                  
                   </h3>
 
                 </CardHeader>
                 <CardFooter stats>
                   <div className={classes.stats}>
-                    <Update />
-                     Tempo médio de espera: 40 min
+                    <AssignmentIndIcon/>
+                    Quantidade:{info.quantidadeAmarelo}
                    </div>
                 </CardFooter>
               </Card>
@@ -170,16 +179,16 @@ export default function Dashboard() {
                   <CardIcon color="success">
                     <Accessibility />
                   </CardIcon>
-                  <p className={classes.cardCategory}>Quantidade </p>
+                  <p className={classes.cardCategory}>Tempo médio de espera </p>
                   <h3 className={classes.cardTitle}>
-                  {info.quantidadeVerde}
+                  {numberFormat(info.tempoVerde)} min
                   </h3>
 
                 </CardHeader>
                 <CardFooter stats>
                   <div className={classes.stats}>
-                    <Update />
-                     Tempo médio de espera:55 min
+                    <AssignmentIndIcon />
+                    Quantidade:{info.quantidadeVerde}
                    </div>
                 </CardFooter>
               </Card>
@@ -190,48 +199,21 @@ export default function Dashboard() {
                   <CardIcon color="info">
                     <Accessibility />
                   </CardIcon>
-                  <p className={classes.cardCategory}>Quantidade </p>
+                  <p className={classes.cardCategory}>Tempo médio de espera </p>
                   <h3 className={classes.cardTitle}>
-                  {info.quantidadeAzul}
+                  {numberFormat(info.tempoAzul)} min
                   </h3>
 
                 </CardHeader>
                 <CardFooter stats>
                   <div className={classes.stats}>
-                    <Update />
-                     Tempo médio de espera: 1h20min
+                    < AssignmentIndIcon/>
+                    Quantidade: {info.quantidadeAzul}
                    </div>
                 </CardFooter>
               </Card>
             </GridItem>
           </GridContainer>
-
-          {/* <GridContainer>
-
-            <GridItem xs={12} sm={12} md={6}>
-              <Card>
-                <CardHeader color="warning">
-                  <h4 className={classes.cardTitleWhite}>Employees Stats</h4>
-                  <p className={classes.cardCategoryWhite}>
-                    New employees on 15th September, 2016
-             </p>
-                </CardHeader>
-                <CardBody>
-                  <Table
-                    tableHeaderColor="warning"
-                    tableHead={["ID", "Name", "Salary", "Country"]}
-                    tableData={[
-                      ["1", "Dakota Rice", "$36,738", "Niger"],
-                      ["2", "Minerva Hooper", "$23,789", "Curaçao"],
-                      ["3", "Sage Rodriguez", "$56,142", "Netherlands"],
-                      ["4", "Philip Chaney", "$38,735", "Korea, South"]
-                    ]}
-                  />
-                </CardBody>
-              </Card>
-            </GridItem>
-          </GridContainer> */}
-
           <Box pt={4}>
             <Footer />
           </Box>
